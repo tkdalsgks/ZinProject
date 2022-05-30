@@ -38,7 +38,7 @@ public class login extends HttpServlet {
 		String account_id = req.getParameter("account_id");
 		String account_pwd = req.getParameter("account_pwd");
 		
-		String company_name = req.getParameter("company_name");
+		//String company_name = req.getParameter("company_name");
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -53,6 +53,53 @@ public class login extends HttpServlet {
 				if(rs.getString("account_pwd").equals(account_pwd)) {
 					account_id = rs.getString("account_id");
 					session.setAttribute("account_id", account_id);
+					
+					String company_name = null;
+					String team_name = null;
+					String member_name = null;
+					String shop_name = null;
+					
+					
+					String typeSQL = "select count(*) as cnt from shop s, account a where a.account_id=? and s.account_id=a.account_id";
+					PreparedStatement ps1 = null;
+					ResultSet rs1 = null;
+					ps1 = conn.prepareStatement(typeSQL);
+					ps1.setString(1, account_id);
+					rs1 = ps1.executeQuery();
+					rs1.next();
+					int tmp = rs1.getInt("cnt");
+					
+					if(tmp == 0) { // 팀원인 경우
+						PreparedStatement ps2 = null;
+						ResultSet rs2 = null;
+						String memberSQL = "select c.company_name,t.team_name,m.member_name from company c, team t, member m, account a "+
+								"where a.account_id=? and a.account_id=m.account_id and m.team_code=t.team_code and t.company_code=c.company_code";
+						ps2 = conn.prepareStatement(memberSQL);
+						ps2.setString(1, account_id);
+						rs2 = ps2.executeQuery();
+						if(rs2.next()) {
+							company_name = rs2.getString("company_name");
+							team_name = rs2.getString("team_name");
+							member_name = rs2.getString("member_name");
+						}
+						
+					}else {  // 점포인 경우
+						PreparedStatement ps2 = null;
+						ResultSet rs2 = null;
+						String shopSQL = "select s.shop_name from shop s, account a "+
+								"where a.account_id=? and a.account_id=s.account_id";
+						ps2 = conn.prepareStatement(shopSQL);
+						ps2.setString(1, account_id);
+						rs2 = ps2.executeQuery();
+						if(rs2.next()) {
+							shop_name = rs2.getString("shop_name");
+						}
+					}
+					session.setAttribute("company_name", company_name);
+					session.setAttribute("team_name", team_name);
+					session.setAttribute("member_name", member_name);
+					session.setAttribute("shop_name", shop_name);
+					
 					resp.sendRedirect("index.jsp");
 				} else {
 					resp.sendRedirect("error.jsp");
@@ -60,9 +107,9 @@ public class login extends HttpServlet {
 			}
 			
 		} catch(ClassNotFoundException e) {
-			System.out.println("Driver 미설치 또는 드라이버이름 오류");
+			System.out.println("Driver 문제");
 		} catch(SQLException e) {
-			System.out.println("DB 접속 오류거나 SQL 문장 오류");
+			System.out.println("DB 연결실패");
 			e.printStackTrace();
 		} finally {
 			try {
