@@ -5,65 +5,186 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<style>
+.signupform{
+	margin-top : 150px;
+	width : 50%;
+	margin-right : auto;
+	margin-left : auto;
+	/*margin-top : auto;
+	margin-bottom : auto;*/
+	text-align :center;
+	border : 1px solid black;
+	padding-top : 50px;
+	padding-bottom: 50px;
+	vertical-align:center;
+}
 
-<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+.inputtitle{
+	font-size : 25px;
+	margin-right : 50px;
+}
+
+.signupbtn{
+	margin-top : 30px;
+	background-color : black;
+	color :white;
+	width : 130px;
+	height : 40px;
+	font-size : 17px;
+}
+
+.signupbtn:hover{
+	cursor : pointer;
+}
+
+.signupinput{
+	font-size : 20px;
+	height : 25px;
+	padding-left : 5px;
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+.signupradio{
+	font-size : 18px;
+}
+
+#idchkbtn{
+	padding-right : 10px;
+	padding-left : 10px;
+	height : 35px;
+	margin-left : 20px;
+}
+
+#idchkbtn:hover{
+	cursor:pointer;
+}
+
+.title{
+	font-size : 30px;
+}
+
+tr{
+	margin-top : 20px;
+	margin-bottom:20px;
+}
+
+</style>
+
+<script type="text/javascript" >
+window.onload = function(){
+	
+	var forcompany = document.getElementById("forcompany");
+	var forshop = document.getElementById("forshop");
+	forcompany.style.display = "none";
+	forshop.style.display = "none";
+	document.getElementById("inputcompany").value = "none";
+	document.getElementById("inputteam").value = "none";
+	document.getElementById("inputname").value = "none";
+	document.getElementById("inputshop").value = "none";
+}
+
+function typeChange(param){
+	const typevalue = param.value;
+	if(typevalue == "company"){
+		forcompany.style.display = "";
+		forshop.style.display = "none";
+		document.getElementById("inputcompany").value = "";
+		document.getElementById("inputteam").value = "";
+		document.getElementById("inputname").value = "";
+		document.getElementById("inputshop").value = "none";
+	}else{
+		forcompany.style.display = "none";
+		forshop.style.display = "";
+		document.getElementById("inputshop").value = "";
+		document.getElementById("inputcompany").value = "none";
+		document.getElementById("inputteam").value = "none";
+		document.getElementById("inputname").value = "none";
+	}
+}
+
+function idChange(){
+	document.getElementById("checkedid").value = "false";
+}
+
+function idCheck(){
+	/*var account_id = $("#account_id").val();
+	$.ajax(
+		{
+			type : "POST",
+			url :"/idcheck",
+			data : {"account_id" : account_id},
+			success : function(msg){
+				if(msg == false){
+					alert("사용할 수 없는 아이디입니다.");
+				}else{
+					alert("사용가능한 아이디입니다.");
+				}
+			}
+		}
+	)*/
+}
+</script>
+
+
 
 </head>
 <body>
 
-<form action="join" method="post">
-	<table style="text-align: center;">
+<form action="join" method="post" onsubmit="return idCheck();">
+	<table class='signupform' style="text-align: center;">
 		<tr>
-			<td colspan="2">회원가입</td>
+			<th class='title' colspan="2">회원가입</th>
 		</tr>
 		<tr>
-			<td>아이디</td>
-			<td><input type="text" name="account_id"></td>
+			<td class='inputtitle'>아이디</td>
+			<td>
+				<input class='signupinput' id="account_id" type="text" name="account_id" onchange="idChange()" required>
+				<!-- <input id='idchkbtn' type="button" value="아이디 중복 확인" onclick="idCheck()">
+				<input type="hidden" id="checkedid" value="false"> -->
+			</td>
 		</tr>
 		<tr>
-			<td>비밀번호</td>
-			<td><input type="password" name="account_pwd"></td>
+			<td class='inputtitle'>비밀번호</td>
+			<td><input class='signupinput' type="password" name="account_pwd" required></td>
 		</tr>
 		<tr>
-			<td colspan="2">본사</td>
+			<td class='inputtitle'>소속</td>
+			<td>
+				<input type="radio" name="type" id="inputtype" value="company" onchange="typeChange(this)" required><span class='signupradio'> 본사</span> &nbsp;&nbsp;
+				<input type="radio" name="type" id="inputtype" value="shop" onchange="typeChange(this)"><span class='signupradio'> 점포</span>
+			</td>
 		</tr>
+		<tbody id='forcompany'>
+			<tr>
+				<td class='inputtitle'>본사명</td>
+				<td><input class='signupinput' id="inputcompany" type="text" name="company_name" required></td>
+			</tr>
+			<tr>
+				<td class='inputtitle'>팀명</td>
+				<td><input class='signupinput' id="inputteam" type="text" name="team_name" required></td>
+			</tr>
+			<tr>
+				<td class='inputtitle'>팀원명</td>
+				<td><input class='signupinput' id="inputname" type="text" name="member_name" required></td>
+			</tr>
+		</tbody>
+		<tbody id="forshop">
+			<tr>
+				<td class='inputtitle'>점포명</td>
+				<td><input class='signupinput' id="inputshop" type="text" name="shop_name" required></td>
+			</tr>
+		</tbody>
+		<% 
+			String errormsg = (String)session.getAttribute("errormsg");
+			if(errormsg != null){
+				out.println("<tr><td colspan='2'><font color='red' size='2'>"+ errormsg +"</font></td></tr>");
+			}
+		%>
 		<tr>
-			<td>본사코드</td>
-			<td><input type="text" name="company_code"></td>
-		</tr>
-		<tr>
-			<td>본사명</td>
-			<td><input type="text" name="company_name"></td>
-		</tr>
-		<tr>
-			<td>팀코드</td>
-			<td><input type="text" name="team_code"></td>
-		</tr>
-		<tr>
-			<td>팀명</td>
-			<td><input type="text" name="team_name"></td>
-		</tr>
-		<tr>
-			<td>팀원코드</td>
-			<td><input type="text" name="member_code"></td>
-		</tr>
-		<tr>
-			<td>팀원명</td>
-			<td><input type="text" name="member_name"></td>
-		</tr>
-		<tr>
-			<td colspan="2">점포</td>
-		</tr>
-		<tr>
-			<td>점포코드</td>
-			<td><input type="text" name="shop_code"></td>
-		</tr>
-		<tr>
-			<td>점포명</td>
-			<td><input type="text" name="shop_name"></td>
-		</tr>
-		<tr>
-			<td colspan="2"><input type="submit" value="회원가입"></td>
+			<td colspan="2"><input class='signupbtn' type="submit" value="`회원가입"></td>
 		</tr>
 	</table>
 </form>

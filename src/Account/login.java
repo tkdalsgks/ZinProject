@@ -54,6 +54,26 @@ public class login extends HttpServlet {
 					account_id = rs.getString("account_id");
 					session.setAttribute("account_id", account_id);
 					
+					
+					// 로그인 시도 횟수 증가
+					
+					String logintrysql = "select account_count from account where account_id=?";
+					PreparedStatement pt5 = conn.prepareStatement(logintrysql);
+					pt5.setString(1,account_id);
+					ResultSet rs5 = pt5.executeQuery();
+					int result=0;
+					if(rs5.next()) {
+						result = rs.getInt("account_count");
+					}
+					
+					logintrysql = "update account set account_count=? where account_id=?";
+					pt5 = conn.prepareStatement(logintrysql);
+					pt5.setInt(1, result+1);
+					pt5.setString(2, account_id);
+					pt5.executeUpdate();
+					
+					
+					
 					String company_name = null;
 					String team_name = null;
 					String member_name = null;
@@ -104,6 +124,8 @@ public class login extends HttpServlet {
 				} else {
 					resp.sendRedirect("error.jsp");
 				}
+			}else {
+				resp.sendRedirect("error.jsp");
 			}
 			
 		} catch(ClassNotFoundException e) {

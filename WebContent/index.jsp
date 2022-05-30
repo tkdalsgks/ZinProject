@@ -12,14 +12,15 @@
 <head>
 <meta charset="UTF-8">
 <title>홈</title>
+
 </head>
 <body>
 
 <% 
 	if(account_id == null) {
 %>
-		<a href="login">로그인</a>
-		<a href="join">회원가입</a>
+		<a class='btn' href="login">로그인</a>
+		<a class='btn' href="join">회원가입</a>
 <%	
 	} else {
 %>
