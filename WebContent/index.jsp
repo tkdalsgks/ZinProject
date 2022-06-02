@@ -90,15 +90,19 @@ body{
 			<tr>
 				<td>점포명</td>
 				<td><%=shop_name %></td>
-			</tr>			
+			</tr>
+			<tr>
+				<td>관리팀원명</td>
+				<td><%=member_name %></td>
+			</tr>
 			<% } %>
 		</table>
 		<br>
-		<!-- <a href="logout">로그아웃</a>
+		<a href="logout">로그아웃</a>
 		<br>
 		<a href="delete">회원탈퇴</a>
 		<br>
-		<a href="item">점포1</a>-->
+		<a href="menu">메뉴</a>
 <%	
 	}
 %>

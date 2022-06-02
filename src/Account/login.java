@@ -109,13 +109,14 @@ public class login extends HttpServlet {
 					}else {  // 점포인 경우
 						PreparedStatement ps2 = null;
 						ResultSet rs2 = null;
-						String shopSQL = "select s.shop_name from shop s, account a "+
-								"where a.account_id=? and a.account_id=s.account_id";
+						String shopSQL = "select s.shop_name, m.member_name from shop s, member m, account a "+
+								"where a.account_id=? and a.account_id=s.account_id and m.member_code=s.member_code";
 						ps2 = conn.prepareStatement(shopSQL);
 						ps2.setString(1, account_id);
 						rs2 = ps2.executeQuery();
 						if(rs2.next()) {
 							shop_name = rs2.getString("shop_name");
+							member_name = rs2.getString("member_name");
 						}
 					}
 					session.setAttribute("company_name", company_name);
