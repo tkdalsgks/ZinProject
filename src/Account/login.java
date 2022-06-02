@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,9 @@ public class login extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect("login.jsp");
+		//resp.sendRedirect("login.jsp");
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
+		requestDispatcher.forward(req, resp);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -120,7 +123,10 @@ public class login extends HttpServlet {
 					session.setAttribute("member_name", member_name);
 					session.setAttribute("shop_name", shop_name);
 					
-					resp.sendRedirect("index.jsp");
+					//resp.sendRedirect("index.jsp");
+					String cPath = req.getContextPath();
+					//resp.sendRedirect("login.jsp");
+					resp.sendRedirect(cPath);
 				} else {
 					resp.sendRedirect("error.jsp");
 				}

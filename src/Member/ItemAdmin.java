@@ -1,4 +1,4 @@
-package Account;
+package Member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,7 +7,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,27 +18,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/idcheck")
-public class IdCheck extends HttpServlet {
-	
+import dto.ItemDTO;
+
+
+@WebServlet("/itemadmin")
+public class ItemAdmin extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	String url = "jdbc:oracle:thin:@168.126.28.44:1521:PKGORCL";
 	String id = "khw";
 	String pw = "khwpw";
 
-    @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html;charset=UTF-8");
+		HttpSession session = req.getSession();
+		String account_id = (String)session.getAttribute("account_id");
 		PrintWriter out = resp.getWriter();
-		String account_id = req.getParameter("account_id");
-		
-		System.out.println(account_id);
 		
 		Connection conn = null;
 		
-		String SQL = "select count(*) as cnt from account where account_id=?";
+		String SQL = "select company_code from account where account_id=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
@@ -47,16 +50,24 @@ public class IdCheck extends HttpServlet {
 			
 			rs = ps.executeQuery();
 			rs.next();
-			int result = rs.getInt("cnt");
+			int company_code = rs.getInt("company_code");
 			
-			if(result == 0) {
-				out.print(true);
-			}else {
-				out.print(false);
+			String itemlist = "select * from item where company_code=?";
+			ps = conn.prepareStatement(itemlist);
+			ps.setInt(1, company_code);
+			rs = ps.executeQuery();
+			List<ItemDTO> item = new ArrayList<>();
+			while(rs.next()) {
+				ItemDTO dto = new ItemDTO();
+				dto.setCompany_code(rs.getInt("company_code"));
+				dto.setItem_code(rs.getInt("item_code"));
+				dto.setItem_name(rs.getString("item_name"));
+				dto.setItem_price(rs.getInt("item_price"));
+				item.add(dto);
 			}
 			
-			out.flush();
-			out.close();
+			req.setAttribute("itemlist", item);
+			
 			
 			
 		} catch(ClassNotFoundException e) {
@@ -70,9 +81,12 @@ public class IdCheck extends HttpServlet {
 			} catch(SQLException e) {}
 		}
 		
+		
+		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("itemadmin.jsp");
+		requestDispatcher.forward(req, resp);
 	}
 
-    @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

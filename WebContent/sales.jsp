@@ -4,13 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>error</title>
+<title>총매출</title>
 <%@ include file="header.jsp"%>
 </head>
 <body>
 
-<h3>로그인 정보를 다시 확인해주세요.</h3>
-<a href="login.jsp">로그인</a>
+<h3>총매출 페이지입니다.</h3>
 
 
 </body>

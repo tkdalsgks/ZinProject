@@ -5,8 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<script src="js/jquery-3.6.0.min.js"></script>
+<%@ include file="header.jsp"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
+
+body{
+	font-family: 'Gowun Dodum', sans-serif;
+	color : black;
+	weight : 500;
+}
+
 .signupform{
 	margin-top : 150px;
 	width : 50%;
@@ -72,6 +80,9 @@ tr{
 }
 
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
 <script type="text/javascript" >
 window.onload = function(){
@@ -80,10 +91,10 @@ window.onload = function(){
 	var forshop = document.getElementById("forshop");
 	forcompany.style.display = "none";
 	forshop.style.display = "none";
-	document.getElementById("inputcompany").value = "none";
-	document.getElementById("inputteam").value = "none";
+	document.getElementById("inputcompany").value = "0";
+	document.getElementById("inputteam").value = "0";
 	document.getElementById("inputname").value = "none";
-	document.getElementById("inputshop").value = "none";
+	document.getElementById("inputshop").value = "0";
 }
 
 function typeChange(param){
@@ -94,13 +105,13 @@ function typeChange(param){
 		document.getElementById("inputcompany").value = "";
 		document.getElementById("inputteam").value = "";
 		document.getElementById("inputname").value = "";
-		document.getElementById("inputshop").value = "none";
+		document.getElementById("inputshop").value = "0";
 	}else{
 		forcompany.style.display = "none";
 		forshop.style.display = "";
 		document.getElementById("inputshop").value = "";
-		document.getElementById("inputcompany").value = "none";
-		document.getElementById("inputteam").value = "none";
+		document.getElementById("inputcompany").value = "0";
+		document.getElementById("inputteam").value = "0";
 		document.getElementById("inputname").value = "none";
 	}
 }
@@ -109,22 +120,36 @@ function idChange(){
 	document.getElementById("checkedid").value = "false";
 }
 
-function idCheck(){
-	/*var account_id = $("#account_id").val();
-	$.ajax(
-		{
-			type : "POST",
-			url :"/idcheck",
-			data : {"account_id" : account_id},
-			success : function(msg){
-				if(msg == false){
-					alert("사용할 수 없는 아이디입니다.");
-				}else{
-					alert("사용가능한 아이디입니다.");
+function idcheck(){
+	var checked = true;
+	var account_id = $("#account_id").val();
+	if(account_id == ""){
+		alert("아이디를 입력해주세요.");
+		checked= false;
+	}
+	else{
+		$.ajax(
+			{
+				type : "POST",
+				url :"idcheck",
+				async : false,
+				data : {"account_id" : account_id},
+				success : function(msg){
+					if(msg == "false"){
+						alert("이미 사용중인 아이디입니다.");
+						$("#account_id").val("");
+						checked = false;
+					}else if(msg == "true"){
+						alert("사용가능한 아이디입니다.");
+						checked = true;
+					}
 				}
 			}
-		}
-	)*/
+		)
+	}
+	
+	//alert(checked);
+	return checked;
 }
 </script>
 
@@ -133,7 +158,7 @@ function idCheck(){
 </head>
 <body>
 
-<form action="join" method="post" onsubmit="return idCheck();">
+<form action="join" method="post" onsubmit="return idcheck();">
 	<table class='signupform' style="text-align: center;">
 		<tr>
 			<th class='title' colspan="2">회원가입</th>
@@ -142,8 +167,8 @@ function idCheck(){
 			<td class='inputtitle'>아이디</td>
 			<td>
 				<input class='signupinput' id="account_id" type="text" name="account_id" onchange="idChange()" required>
-				<!-- <input id='idchkbtn' type="button" value="아이디 중복 확인" onclick="idCheck()">
-				<input type="hidden" id="checkedid" value="false"> -->
+				<input id='idchkbtn' type="button" value="아이디 중복 확인" onclick="idcheck()">
+				<input type="hidden" id="checkedid" value="false">
 			</td>
 		</tr>
 		<tr>
@@ -159,12 +184,12 @@ function idCheck(){
 		</tr>
 		<tbody id='forcompany'>
 			<tr>
-				<td class='inputtitle'>본사명</td>
-				<td><input class='signupinput' id="inputcompany" type="text" name="company_name" required></td>
+				<td class='inputtitle'>본사코드</td>
+				<td><input class='signupinput' id="inputcompany" type="number" name="company_code" required></td>
 			</tr>
 			<tr>
-				<td class='inputtitle'>팀명</td>
-				<td><input class='signupinput' id="inputteam" type="text" name="team_name" required></td>
+				<td class='inputtitle'>팀코드</td>
+				<td><input class='signupinput' id="inputteam" type="number" name="team_code" required></td>
 			</tr>
 			<tr>
 				<td class='inputtitle'>팀원명</td>
@@ -173,8 +198,8 @@ function idCheck(){
 		</tbody>
 		<tbody id="forshop">
 			<tr>
-				<td class='inputtitle'>점포명</td>
-				<td><input class='signupinput' id="inputshop" type="text" name="shop_name" required></td>
+				<td class='inputtitle'>점포코드</td>
+				<td><input class='signupinput' id="inputshop" type="number" name="shop_code" required></td>
 			</tr>
 		</tbody>
 		<% 

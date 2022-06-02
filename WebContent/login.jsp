@@ -5,7 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<%@ include file="header.jsp"%>
 <style>
+body{
+	font-family: 'Gowun Dodum', sans-serif;
+	color : black;
+	weight : 500;
+}
 .loginform{
 	margin-top : 200px;
 	border : 1px solid black;
@@ -45,6 +51,9 @@
 }
 
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 </head>
 <body>
 

@@ -12,7 +12,46 @@
 <head>
 <meta charset="UTF-8">
 <title>홈</title>
+<%@ include file="header.jsp"%>
+<style>
 
+body{
+	font-family: 'Gowun Dodum', sans-serif;
+	color : black;
+	weight : 500;
+}
+
+.btn{
+	text-align : center;
+	vertical-align :middle;
+	padding-top : 30px;
+	height : 70px;
+	width : 40%;
+	display : block;
+	margin-top : 150px;
+	margin-bottom : 100px;
+	margin-left : auto;
+	margin-right: auto;
+	font-size : 35px;
+	background-color : gray;
+	color : white;
+	text-decoration: none;
+}
+
+.login_info{
+	margin-top : 100px;
+	margin-right :auto;
+	margin-left : auto;
+	width : 50%;
+	height : 300px;
+	font-size : 30px;
+	font-weight : 500;
+	
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -24,7 +63,7 @@
 <%	
 	} else {
 %>
-		<table>
+		<table class='login_info'>
 			<tr>
 				<td>아이디</td>
 				<td><%=account_id %></td>
@@ -55,11 +94,11 @@
 			<% } %>
 		</table>
 		<br>
-		<a href="logout">로그아웃</a>
+		<!-- <a href="logout">로그아웃</a>
 		<br>
 		<a href="delete">회원탈퇴</a>
 		<br>
-		<a href="item">점포1</a>
+		<a href="item">점포1</a>-->
 <%	
 	}
 %>

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,11 @@ public class Join extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect("join.jsp");
+		//resp.sendRedirect("join.jsp");
+		HttpSession session = req.getSession();
+		session.removeAttribute("errormsg");
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("join.jsp");
+		requestDispatcher.forward(req, resp);
 	}
 
 	@Override
@@ -45,42 +50,54 @@ public class Join extends HttpServlet {
 		String account_pwd = req.getParameter("account_pwd");
 		
 		String type= req.getParameter("type");
-		String company_name = req.getParameter("company_name");
-		String team_name = req.getParameter("team_name");
+		String company_code = req.getParameter("company_code");
+		String team_code = req.getParameter("team_code");
 		String member_name = req.getParameter("member_name");
-		String shop_name = req.getParameter("shop_name");
+		String shop_code = req.getParameter("shop_code");
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			if(type.equals("shop")) {  // 점포 주인 회원가입
-				String isShop = "select count(*) as cnt from shop where shop_name=?";
+				String isShop = "select count(*) as cnt from shop where shop_code=?";
 				ps1 = conn.prepareStatement(isShop);
-				ps1.setString(1, shop_name);
+				ps1.setInt(1, Integer.parseInt(shop_code));
 				rs1 = ps1.executeQuery();
 				rs1.next();
 				if(rs1.getInt("cnt")==0) { // 계약된 가맹점이 아닐경우,
 					
 					String errormsg = "해당 점포는 계약된 점포가 아닙니다.";
-					
+					System.out.println(errormsg);
 					session.setAttribute("errormsg", errormsg);
 					
-					resp.sendRedirect("join.jsp");
+					//resp.sendRedirect("join.jsp");
+					RequestDispatcher requestDispatcher = req.getRequestDispatcher("join.jsp");
+					requestDispatcher.forward(req, resp);
 					
 				}else {
-					String accountInsert = "insert into account(account_id,account_pwd,company_code) values(?,?,1)";
+					String companyCode = "select company_code from shop where shop_code=?";
+					ps2 = conn.prepareStatement(companyCode);
+					ps2.setInt(1, Integer.parseInt(shop_code));
+					rs2 = ps2.executeQuery();
+					rs2.next();
+					int company_c = rs2.getInt("company_code");
+					
+					String accountInsert = "insert into account(account_id,account_pwd,company_code) values(?,?,?)";
 					ps2 = conn.prepareStatement(accountInsert);
 					ps2.setString(1, account_id);
 					ps2.setString(2, account_pwd);
+					ps2.setInt(3, company_c);
 					ps2.executeUpdate();
 					
-					String shopUpdate = "update shop set account_id=? where shop_name=?";
+					String shopUpdate = "update shop set account_id=? where shop_code=?";
 					ps2 = conn.prepareStatement(shopUpdate);
 					ps2.setString(1, account_id);
-					ps2.setString(2, shop_name);
+					ps2.setInt(2, Integer.parseInt(shop_code));
 					ps2.executeUpdate();
 					
-					resp.sendRedirect("login.jsp");
+					String cPath = req.getContextPath();
+					//resp.sendRedirect("login.jsp");
+					resp.sendRedirect(cPath + "/login");
 				}
 				
 				
@@ -88,10 +105,10 @@ public class Join extends HttpServlet {
 				
 				
 				String isMember = "select count(*) as cnt from company c, team t "
-						+ "where c.company_name=? and c.company_code=t.company_code and t.team_name=?";
+						+ "where c.company_code=? and c.company_code=t.company_code and t.team_code=?";
 				ps1 = conn.prepareStatement(isMember);
-				ps1.setString(1, company_name);
-				ps1.setString(2, team_name);
+				ps1.setInt(1, Integer.parseInt(company_code));
+				ps1.setInt(2, Integer.parseInt(team_code));
 				rs1 = ps1.executeQuery();
 				rs1.next();
 				if(rs1.getInt("cnt")==0) { // 본사 직원이 아닐경우,
@@ -100,13 +117,16 @@ public class Join extends HttpServlet {
 					
 					session.setAttribute("errormsg", errormsg);
 					
-					resp.sendRedirect("join.jsp");
+					//resp.sendRedirect("join.jsp");
+					RequestDispatcher requestDispatcher = req.getRequestDispatcher("join.jsp");
+					requestDispatcher.forward(req, resp);
 					
 				}else {
-					String accountInsert = "insert into account(account_id,account_pwd,company_code) values(?,?,1)";
+					String accountInsert = "insert into account(account_id,account_pwd,company_code) values(?,?,?)";
 					ps2 = conn.prepareStatement(accountInsert);
 					ps2.setString(1, account_id);
 					ps2.setString(2, account_pwd);
+					ps2.setInt(3, Integer.parseInt(company_code));
 					ps2.executeUpdate();
 					
 					String memberCode = "select max(member_code) as maxcode from member";
@@ -115,22 +135,24 @@ public class Join extends HttpServlet {
 					rs2.next();
 					int code = rs2.getInt("maxcode") + 1;
 					
-					String teamCode = "select team_code from team where team_name=?";
+					/*String teamCode = "select team_code from team where team_name=?";
 					ps2 = conn.prepareStatement(teamCode);
 					ps2.setString(1, team_name);
 					rs2 = ps2.executeQuery();
 					rs2.next();
-					int teamcode = rs2.getInt("team_code");
+					int teamcode = rs2.getInt("team_code");*/
 					
 					String memberInsert = "insert into member(member_code,team_code,member_name,account_id) values(?,?,?,?)";
 					ps2 = conn.prepareStatement(memberInsert);
 					ps2.setInt(1, code);
-					ps2.setInt(2, teamcode);
+					ps2.setInt(2, Integer.parseInt(team_code));
 					ps2.setString(3, member_name);
 					ps2.setString(4, account_id);
 					ps2.executeUpdate();
 					
-					resp.sendRedirect("login.jsp");
+					String cPath = req.getContextPath();
+					//resp.sendRedirect("login.jsp");
+					resp.sendRedirect(cPath + "/login");
 				}
 				
 				
