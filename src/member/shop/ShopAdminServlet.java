@@ -30,7 +30,7 @@ public class ShopAdminServlet extends MyServlet {
 		HttpSession session = req.getSession();
 		String account_id = (String)session.getAttribute("account_id");
 		
-		String SQL = "select company_code from account where account_id=?";
+		String SQL = "SELECT COMPANY_CODE FROM ACCOUNT WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -43,7 +43,7 @@ public class ShopAdminServlet extends MyServlet {
 			rs.next();
 			int company_code = rs.getInt("company_code");
 			
-			SQL = "select member_code from member where account_id=?";
+			SQL = "SELECT MEMBER_CODE FROM MEMBER WHERE ACCOUNT_ID=?";
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, account_id);
 			
@@ -52,7 +52,7 @@ public class ShopAdminServlet extends MyServlet {
 			int member_code = rs.getInt("member_code");
 			
 			
-			String shoplist = "select * from shop where company_code=? and member_code=?";
+			String shoplist = "SELECT * FROM SHOP WHERE COMPANY_CODE=? AND MEMBER_CODE=?";
 			ps = conn.prepareStatement(shoplist);
 			ps.setInt(1, company_code);
 			ps.setInt(2, member_code);

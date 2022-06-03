@@ -24,7 +24,7 @@ public class ShopDeleteServlet extends MyServlet {
 		
 		int shop_code = Integer.parseInt(req.getParameter("code"));
 		
-		String accountId = "select account_id from shop where shop_code=?";
+		String accountId = "SELECT ACCOUNT_ID FROM SHOP WHERE SHOP_CODE=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -36,13 +36,13 @@ public class ShopDeleteServlet extends MyServlet {
 			rs.next();
 			String account_id = rs.getString("account_id");
 			
-			String deleteShop = "delete from shop where shop_code=?";
+			String deleteShop = "DELETE FROM SHOP WHERE SHOP_CODE=?";
 			
 			ps = conn.prepareStatement(deleteShop);
 			ps.setInt(1, shop_code);
 			ps.executeUpdate();
 			
-			String deleteAccount = "delete from account where account_id=?";
+			String deleteAccount = "DELETE FROM ACCOUNT WHERE ACCOUNT_ID=?";
 			
 			ps = conn.prepareStatement(deleteAccount);
 			ps.setString(1, account_id);

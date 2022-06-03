@@ -44,28 +44,28 @@ public class OrderServlet extends MyServlet {
 		int orders_camount = orders_amount;
 		
 		try {
-			String orderCode = "select max(orders_code) as maxcode from orders";
+			String orderCode = "SELECT MAX(ORDERS_CODE) AS MAXCODE FROM ORDERS";
 			ps = conn.prepareStatement(orderCode);
 			rs = ps.executeQuery();
 			rs.next();
-			int ordercode = rs.getInt("maxcode") + 1;
+			int ordercode = rs.getInt("MAXCODE") + 1;
 			
-			String shopCode = "select shop_code as shopcode from shop where shop_code=?";
+			String shopCode = "SELECT SHOP_CODE AS SHOPCODE FROM SHOP WHERE SHOP_CODE=?";
 			ps = conn.prepareStatement(shopCode);
 			ps.setInt(1, shop_code);
 			rs = ps.executeQuery();
 			rs.next();
-			int shopcode = rs.getInt("shopcode");
+			int shopcode = rs.getInt("SHOPCODE");
 			
-			String itemCode = "select item_code as itemcode from item where item_code=?";
+			String itemCode = "SELECT ITEM_CODE AS ITEMCODE FROM ITEM WHERE ITEM_CODE=?";
 			ps = conn.prepareStatement(itemCode);
 			ps.setInt(1, item_code);
 			rs = ps.executeQuery();
 			rs.next();
-			int itemcode = rs.getInt("itemcode");
+			int itemcode = rs.getInt("ITEMCODE");
 			
-			String SQL = "insert into orders(orders_code,shop_code,item_code,orders_amount,orders_camount,orders_date) "
-					+ "values(?, ?, ?, ?, ?, sysdate)";
+			String SQL = "INSERT INTO ORDERS(ORDERS_CODE,SHOP_CODE,ITEM_CODE,ORDERS_AMOUNT,ORDERS_CAMOUNT,ORDERS_DATE) "
+					+ "VALUES(?, ?, ?, ?, ?, SYSDATE)";
 			ps = conn.prepareStatement(SQL);
 			ps.setInt(1, ordercode);
 			ps.setInt(2, shopcode);
@@ -74,12 +74,12 @@ public class OrderServlet extends MyServlet {
 			ps.setInt(5, orders_camount);
 			ps.executeUpdate();
 			
-			String sitemAmount = "select sitem_amount as sitemamount from sitem where sitem_code=?";
+			String sitemAmount = "SELECT SITEM_AMOUNT AS SITEMAMOUNT FROM SITEM WHERE SITEM_CODE=?";
 			ps = conn.prepareStatement(sitemAmount);
 			ps.setInt(1, itemcode);
 			rs = ps.executeQuery();
 			rs.next();
-			int sitemamount = rs.getInt("sitemamount");
+			int sitemamount = rs.getInt("SITEMAMOUNT");
 			int amountresult = sitemamount - orders_amount;
 			System.out.println(amountresult + "로 amount 바꾸기");
 			
@@ -91,7 +91,7 @@ public class OrderServlet extends MyServlet {
 				ordermsg = "주문수량을 제대로 입력해주세요.";
 				req.setAttribute("ordermsg", ordermsg);
 			} else {
-				String sitemCode = "update sitem set sitem_amount=? where sitem_code=?";
+				String sitemCode = "UPDATE SITEM SET SITEM_AMOUNT=? WHERE SITEM_CODE=?";
 				ps = conn.prepareStatement(sitemCode);
 				ps.setInt(1, amountresult);
 				ps.setInt(2, itemcode);

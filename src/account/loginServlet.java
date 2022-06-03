@@ -27,7 +27,7 @@ public class loginServlet extends MyServlet {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection conn = DBConnection.getConnection();
 		
-		String SQL = "select * from account where account_id=? and account_pwd=?";
+		String SQL = "SELECT * FROM ACCOUNT WHERE ACCOUNT_ID=? AND ACCOUNT_PWD=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		HttpSession session = req.getSession();
@@ -50,7 +50,7 @@ public class loginServlet extends MyServlet {
 					
 					// 로그인 시도 횟수 증가
 					
-					String logintrysql = "select account_count from account where account_id=?";
+					String logintrysql = "SELECT ACCOUNT_COUNT FROM ACCOUNT WHERE ACCOUNT_ID=?";
 					PreparedStatement pt5 = conn.prepareStatement(logintrysql);
 					pt5.setString(1,account_id);
 					ResultSet rs5 = pt5.executeQuery();
@@ -59,7 +59,7 @@ public class loginServlet extends MyServlet {
 						result = rs.getInt("account_count");
 					}
 					
-					logintrysql = "update account set account_count=? where account_id=?";
+					logintrysql = "UPDATE ACCOUNT SET ACCOUNT_COUNT=? WHERE ACCOUNT_ID=?";
 					pt5 = conn.prepareStatement(logintrysql);
 					pt5.setInt(1, result+1);
 					pt5.setString(2, account_id);
@@ -73,20 +73,23 @@ public class loginServlet extends MyServlet {
 					String shop_name = null;
 					
 					
-					String typeSQL = "select count(*) as cnt from shop s, account a where a.account_id=? and s.account_id=a.account_id";
+					String typeSQL = "SELECT COUNT(*) AS CNT FROM SHOP S, ACCOUNT A "
+							+ "WHERE A.ACCOUNT_ID=? AND S.ACCOUNT_ID=A.ACCOUNT_ID";
 					PreparedStatement ps1 = null;
 					ResultSet rs1 = null;
 					ps1 = conn.prepareStatement(typeSQL);
 					ps1.setString(1, account_id);
 					rs1 = ps1.executeQuery();
 					rs1.next();
-					int tmp = rs1.getInt("cnt");
+					int tmp = rs1.getInt("CNT");
 					
 					if(tmp == 0) { // 팀원인 경우
 						PreparedStatement ps2 = null;
 						ResultSet rs2 = null;
-						String memberSQL = "select c.company_name,t.team_name,m.member_name from company c, team t, member m, account a "+
-								"where a.account_id=? and a.account_id=m.account_id and m.team_code=t.team_code and t.company_code=c.company_code";
+						String memberSQL = "SELECT C.COMPANY_NAME,T.TEAM_NAME,M.MEMBER_NAME "
+								+ "FROM COMPANY C, TEAM T, MEMBER M, ACCOUNT A "
+								+ "WHERE A.ACCOUNT_ID=? "
+								+ "AND A.ACCOUNT_ID=M.ACCOUNT_ID AND M.TEAM_CODE=T.TEAM_CODE AND T.COMPANY_CODE=C.COMPANY_CODE";
 						ps2 = conn.prepareStatement(memberSQL);
 						ps2.setString(1, account_id);
 						rs2 = ps2.executeQuery();
@@ -99,8 +102,9 @@ public class loginServlet extends MyServlet {
 					}else {  // 점포인 경우
 						PreparedStatement ps2 = null;
 						ResultSet rs2 = null;
-						String shopSQL = "select s.shop_name, m.member_name from shop s, member m, account a "+
-								"where a.account_id=? and a.account_id=s.account_id and m.member_code=s.member_code";
+						String shopSQL = "SELECT S.SHOP_NAME, M.MEMBER_NAME "
+								+ "FROM SHOP S, MEMBER M, ACCOUNT A "
+								+ "WHERE A.ACCOUNT_ID=? AND A.ACCOUNT_ID=S.ACCOUNT_ID AND M.MEMBER_CODE=S.MEMBER_CODE";
 						ps2 = conn.prepareStatement(shopSQL);
 						ps2.setString(1, account_id);
 						rs2 = ps2.executeQuery();

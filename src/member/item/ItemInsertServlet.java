@@ -26,7 +26,7 @@ public class ItemInsertServlet extends MyServlet {
 		HttpSession session = req.getSession();
 		String account_id = (String)session.getAttribute("account_id");
 		
-		String SQL = "select member_name from member where account_id=?";
+		String SQL = "SELECT MEMBER_NAME FROM MEMBER WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -40,7 +40,8 @@ public class ItemInsertServlet extends MyServlet {
 			String member_name = rs.getString("member_name");
 			
 			
-			String companyCode = "select p.company_code from company p, team t, member m where m.account_id=? and m.team_code = t.team_code and t.company_code=p.company_code";
+			String companyCode = "SELECT P.COMPANY_CODE FROM COMPANY P, TEAM T, MEMBER M "
+					+ "WHERE M.ACCOUNT_ID=? AND M.TEAM_CODE=T.TEAM_CODE AND T.COMPANY_CODE=P.COMPANY_CODE";
 			ps = conn.prepareStatement(companyCode);
 			ps.setString(1, account_id);
 			rs = ps.executeQuery();
@@ -80,13 +81,13 @@ public class ItemInsertServlet extends MyServlet {
 		try {
 			conn = DBConnection.getConnection();
 			
-			String itemCode = "select max(item_code) as item_code from item";
+			String itemCode = "SELECT MAX(ITEM_CODE) AS ITEM_CODE FROM ITEM";
 			ps = conn.prepareStatement(itemCode);
 			rs = ps.executeQuery();
 			rs.next();
 			int item_code = rs.getInt("item_code") + 1;
 			
-			String insertItem = "insert into item(item_code,company_code,item_name,item_price) values(?,?,?,?)";
+			String insertItem = "INSERT INTO ITEM(ITEM_CODE,COMPANY_CODE,ITEM_NAME,ITEM_PRICE) VALUES(?,?,?,?)";
 			ps = conn.prepareStatement(insertItem);
 			ps.setInt(1, item_code);
 			ps.setInt(2, company_code);

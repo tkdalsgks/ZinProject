@@ -32,7 +32,7 @@ public class ShopItemServlet extends MyServlet {
 		String account_id = (String)session.getAttribute("account_id");
 		PrintWriter out = resp.getWriter();
 		
-		String SQL = "select shop_code from shop where account_id=?";
+		String SQL = "SELECT SHOP_CODE FROM SHOP WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -45,7 +45,7 @@ public class ShopItemServlet extends MyServlet {
 			rs.next();
 			int shop_code = rs.getInt("shop_code");
 			
-			String itemlist = "select * from sitem where shop_code=? order by sitem_code";
+			String itemlist = "SELECT * FROM SITEM WHERE SHOP_CODE=? ORDER BY SITEM_CODE";
 			ps = conn.prepareStatement(itemlist);
 			ps.setInt(1, shop_code);
 			rs = ps.executeQuery();

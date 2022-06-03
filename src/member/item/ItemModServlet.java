@@ -30,7 +30,7 @@ public class ItemModServlet extends MyServlet {
 		
 		int item_code = Integer.parseInt(req.getParameter("code"));
 		
-		String itemName = "select * from item where item_code=?";
+		String itemName = "SELECT * FROM ITEM WHERE ITEM_CODE=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -76,7 +76,7 @@ Connection conn = DBConnection.getConnection();
 		ResultSet rs = null;
 		
 		try {
-			String insertShop = "update item set item_name=?,item_price=? where item_code=?";
+			String insertShop = "UPDATE ITEM SET ITEM_NAME=?,ITEM_PRICE=? WHERE ITEM_CODE=?";
 			ps = conn.prepareStatement(insertShop);
 			ps.setString(1, item_name);
 			ps.setInt(2, item_price);

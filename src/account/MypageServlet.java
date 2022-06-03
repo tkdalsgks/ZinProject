@@ -31,7 +31,7 @@ public class MypageServlet extends MyServlet {
 		String account_id = (String)session.getAttribute("account_id");
 		PrintWriter out = resp.getWriter();
 		
-		String SQL = "select * from account where account_id=?";
+		String SQL = "SELECT * FROM ACCOUNT WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -47,15 +47,15 @@ public class MypageServlet extends MyServlet {
 				accountdto.setAccount_pwd(rs.getString("account_pwd"));
 			}
 			
-			String isShop = "select count(*) as cnt from shop where account_id=?";
+			String isShop = "SELECT COUNT(*) AS CNT FROM SHOP WHERE ACCOUNT_ID=?";
 			ps = conn.prepareStatement(isShop);
 			ps.setString(1, account_id);
 			rs = ps.executeQuery();
 			rs.next();
-			int result = rs.getInt("cnt");
+			int result = rs.getInt("CNT");
 			
 			if(result ==0) { // 본사직원이라면
-				String membername = "select member_name from member where account_id=?";
+				String membername = "SELECT MEMBER_NAME FROM MEMBER WHERE ACCOUNT_ID=?";
 				ps = conn.prepareStatement(membername);
 				ps.setString(1, account_id);
 				rs = ps.executeQuery();
@@ -65,7 +65,7 @@ public class MypageServlet extends MyServlet {
 					accountdto.setShop_name(null);
 				}
 			}else {	// 점포주인이라면
-				String shopname = "select shop_name from shop where account_id=?";
+				String shopname = "SELECT SHOP_NAME FROM SHOP WHERE ACCOUNT_ID=?";
 				ps = conn.prepareStatement(shopname);
 				ps.setString(1, account_id);
 				rs = ps.executeQuery();

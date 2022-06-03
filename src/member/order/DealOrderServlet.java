@@ -35,7 +35,7 @@ public class DealOrderServlet extends MyServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
-			String ordersinfo = "select * from orders where orders_code=?";
+			String ordersinfo = "SELECT * FROM ORDERS WHERE ORDERS_CODE=?";
 			ps = conn.prepareStatement(ordersinfo);
 			ps.setInt(1, orders_code);
 			rs = ps.executeQuery();
@@ -77,14 +77,14 @@ public class DealOrderServlet extends MyServlet {
 		ResultSet rs = null;
 		
 		try {
-			String dealOrder = "update orders set orders_camount=?,orders_sort=1 where orders_code=?";
+			String dealOrder = "UPDATE ORDERS SET ORDERS_CAMOUNT=?,ORDERS_SORT=1 WHERE ORDERS_CODE=?";
 			ps = conn.prepareStatement(dealOrder);
 			ps.setInt(1, orders_camount);
 			ps.setInt(2, orders_code);
 			ps.executeUpdate();
 			//System.out.println("확정 주문 update");
 			
-			String SitemAmount = "select * from sitem where shop_code=? and item_code=?";
+			String SitemAmount = "SELECT * FROM SITEM WHERE SHOP_CODE=? AND ITEM_CODE=?";
 			ps = conn.prepareStatement(SitemAmount);
 			ps.setInt(1, shop_code);
 			ps.setInt(2, item_code);
@@ -96,7 +96,7 @@ public class DealOrderServlet extends MyServlet {
 				int sitem_code = rs.getInt("sitem_code");
 				int sitem_amount = rs.getInt("sitem_amount") + orders_camount;
 				
-				String updateSitem = "update sitem set sitem_amount=? where sitem_code=?";
+				String updateSitem = "UPDATE SITEM SET SITEM_AMOUNT=? WHERE SITEM_CODE=?";
 				ps = conn.prepareStatement(updateSitem);
 				ps.setInt(1, sitem_amount);
 				ps.setInt(2, sitem_code);
@@ -104,14 +104,14 @@ public class DealOrderServlet extends MyServlet {
 				//System.out.println("--------");
 			}else {  // 이 상품을 처음 주문하는거라면
 				//System.out.println("상품 첫주문");
-				String SitemCode = "select max(sitem_code) as sitem_code from sitem";
+				String SitemCode = "SELECT MAX(SITEM_CODE) AS SITEM_CODE FROM SITEM";
 				ps = conn.prepareStatement(SitemCode);
 				rs = ps.executeQuery();
 				rs.next();
 				int sitem_code = rs.getInt("sitem_code")+1;
 				int sitem_amount = orders_camount;
 				
-				String insertSitem = "insert into sitem(sitem_code,shop_code,item_code,sitem_amount) values (?,?,?,?)";
+				String insertSitem = "INSERT INTO SITEM(SITEM_CODE,SHOP_CODE,ITEM_CODE,SITEM_AMOUNT) VALUES(?,?,?,?)";
 				ps = conn.prepareStatement(insertSitem);
 				ps.setInt(1, sitem_code);
 				ps.setInt(2, shop_code);

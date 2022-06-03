@@ -38,7 +38,7 @@ public class BottommenuServlet extends MyServlet {
 		PrintWriter out = resp.getWriter();
 		String menu_top = req.getParameter("menu_top");
 		
-		String SQL = "select * from tmpmenu where menu_top=?";
+		String SQL = "SELECT * FROM TMPMENU WHERE MENU_TOP=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		HttpSession session = req.getSession();

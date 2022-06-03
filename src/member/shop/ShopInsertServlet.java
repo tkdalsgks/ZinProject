@@ -26,7 +26,7 @@ public class ShopInsertServlet extends MyServlet {
 		HttpSession session = req.getSession();
 		String account_id = (String)session.getAttribute("account_id");
 		
-		String SQL = "select member_name from member where account_id=?";
+		String SQL = "SELECT MEMBER_NAME FROM MEMBER WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -63,7 +63,7 @@ Connection conn = DBConnection.getConnection();
 		String shop_name = req.getParameter("shop_name");
 		String account_id = (String)session.getAttribute("account_id");
 		
-		String SQL = "select member_code from member where account_id=?";
+		String SQL = "SELECT MEMBER_CODE FROM MEMBER WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
@@ -76,7 +76,8 @@ Connection conn = DBConnection.getConnection();
 			int member_code = rs.getInt("member_code");
 			//System.out.println("membercode 가져옴");
 			
-			String companyCode = "select p.company_code from company p, team t, member m where m.member_code=? and m.team_code = t.team_code and t.company_code=p.company_code";
+			String companyCode = "SELECT P.COMPANY_CODE FROM COMPANY P, TEAM T, MEMBER M "
+					+ "WHERE M.MEMBER_CODE=? AND M.TEAM_CODE=T.TEAM_CODE AND T.COMPANY_CODE=P.COMPANY_CODE";
 			ps = conn.prepareStatement(companyCode);
 			ps.setInt(1, member_code);
 			rs = ps.executeQuery();
@@ -84,14 +85,14 @@ Connection conn = DBConnection.getConnection();
 			int company_code = rs.getInt("company_code");
 			//System.out.println("companycode 가져옴");
 			
-			String shopCode = "select max(shop_code) as shop_code from shop";
+			String shopCode = "SELECT MAX(SHOP_CODE) AS SHOP_CODE FROM SHOP";
 			ps = conn.prepareStatement(shopCode);
 			rs = ps.executeQuery();
 			rs.next();
 			int shop_code = rs.getInt("shop_code") + 1;
 			//System.out.println("shopcode 가져옴");
 			
-			String insertShop = "insert into shop(shop_code,company_code,member_code,shop_name) values(?,?,?,?)";
+			String insertShop = "INSERT INTO SHOP(SHOP_CODE,COMPANY_CODE,MEMBER_CODE,SHOP_NAME) VALUES(?,?,?,?)";
 			ps = conn.prepareStatement(insertShop);
 			ps.setInt(1, shop_code);
 			ps.setInt(2, company_code);

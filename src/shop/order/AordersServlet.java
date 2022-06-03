@@ -35,7 +35,7 @@ public class AordersServlet extends MyServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
-			String shopCode = "select shop_code from shop where account_id=?";
+			String shopCode = "SELECT SHOP_CODE FROM SHOP WHERE ACCOUNT_ID=?";
 			
 			ps = conn.prepareStatement(shopCode);
 			ps.setString(1, account_id);
@@ -44,7 +44,7 @@ public class AordersServlet extends MyServlet {
 			rs.next();
 			int shop_code = rs.getInt("shop_code");
 			
-			String orderslist = "select * from orders where shop_code=? and orders_amount=orders_camount";
+			String orderslist = "SELECT * FROM ORDERS WHERE SHOP_CODE=? AND ORDERS_AMOUNT=ORDERS_CAMOUNT";
 			
 			List<OrdersDTO> orders = new ArrayList<>();
 			

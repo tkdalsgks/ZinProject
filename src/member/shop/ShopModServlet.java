@@ -30,7 +30,7 @@ public class ShopModServlet extends MyServlet {
 		
 		int shop_code = Integer.parseInt(req.getParameter("code"));
 		
-		String accountId = "select shop_name from shop where shop_code=?";
+		String accountId = "SELECT SHOP_NAME FROM SHOP WHERE SHOP_CODE=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
@@ -42,7 +42,7 @@ public class ShopModServlet extends MyServlet {
 			rs.next();
 			String shop_name = rs.getString("shop_name");
 			
-			String memberName = "select member_name from member where account_id=?";
+			String memberName = "SELECT MEMBER_NAME FROM MEMBER WHERE ACCOUNT_ID=?";
 			ps = conn.prepareStatement(memberName);
 			ps.setString(1, account_id);
 			
@@ -82,7 +82,7 @@ public class ShopModServlet extends MyServlet {
 		ResultSet rs = null;
 		
 		try {
-			String insertShop = "update shop set shop_name=? where shop_code=?";
+			String insertShop = "UPDATE SHOP SET SHOP_NAME=? WHERE SHOP_CODE=?";
 			ps = conn.prepareStatement(insertShop);
 			ps.setString(1, shop_name);
 			ps.setInt(2, shop_code);

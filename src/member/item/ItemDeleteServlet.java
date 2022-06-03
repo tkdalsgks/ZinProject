@@ -29,7 +29,7 @@ public class ItemDeleteServlet extends MyServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
-			String deleteShop = "delete from item where item_code=?";
+			String deleteShop = "DELETE FROM ITEM WHERE ITEM_CODE=?";
 			
 			ps = conn.prepareStatement(deleteShop);
 			ps.setInt(1, item_code);

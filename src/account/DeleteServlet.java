@@ -26,7 +26,7 @@ public class DeleteServlet extends MyServlet {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection conn = DBConnection.getConnection();
 		
-		String SQL = "delete from account where account_id=?";
+		String SQL = "DELEFT FROM ACCOUNT WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		int delete = 0;
 		HttpSession session = req.getSession();

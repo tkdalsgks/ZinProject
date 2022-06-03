@@ -48,12 +48,12 @@ public class JoinServlet extends MyServlet {
 		String shop_code = req.getParameter("shop_code");
 		try {
 			if(type.equals("shop")) {  // 점포 주인 회원가입
-				String isShop = "select count(*) as cnt from shop where shop_code=?";
+				String isShop = "SELECT COUNT(*) AS CNT FROM SHOP WHERE SHOP_CODE=?";
 				ps1 = conn.prepareStatement(isShop);
 				ps1.setInt(1, Integer.parseInt(shop_code));
 				rs1 = ps1.executeQuery();
 				rs1.next();
-				if(rs1.getInt("cnt")==0) { // 계약된 가맹점이 아닐경우,
+				if(rs1.getInt("CNT")==0) { // 계약된 가맹점이 아닐경우,
 					
 					String errormsg = "해당 점포는 계약된 점포가 아닙니다.";
 					System.out.println(errormsg);
@@ -62,21 +62,21 @@ public class JoinServlet extends MyServlet {
 					super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
 					
 				}else {
-					String companyCode = "select company_code from shop where shop_code=?";
+					String companyCode = "SELECT COMPANY_CODE FROM SHOP WHERE SHOP_CODE=?";
 					ps2 = conn.prepareStatement(companyCode);
 					ps2.setInt(1, Integer.parseInt(shop_code));
 					rs2 = ps2.executeQuery();
 					rs2.next();
 					int company_c = rs2.getInt("company_code");
 					
-					String accountInsert = "insert into account(account_id,account_pwd,company_code) values(?,?,?)";
+					String accountInsert = "INSERT INTO ACCOUNT(ACCOUNT_ID,ACCOUNT_PWD,COMPANY_CODE) VALUES(?,?,?)";
 					ps2 = conn.prepareStatement(accountInsert);
 					ps2.setString(1, account_id);
 					ps2.setString(2, account_pwd);
 					ps2.setInt(3, company_c);
 					ps2.executeUpdate();
 					
-					String shopUpdate = "update shop set account_id=? where shop_code=?";
+					String shopUpdate = "UPDATE SHOP SET ACCOUNT_ID=? WHERE SHOP_CODE=?";
 					ps2 = conn.prepareStatement(shopUpdate);
 					ps2.setString(1, account_id);
 					ps2.setInt(2, Integer.parseInt(shop_code));
@@ -90,14 +90,14 @@ public class JoinServlet extends MyServlet {
 			}else {  // 본사직원 회원가입
 				
 				
-				String isMember = "select count(*) as cnt from company c, team t "
-						+ "where c.company_code=? and c.company_code=t.company_code and t.team_code=?";
+				String isMember = "SELECT COUNT(*) AS CNT FROM COMPANY C, TEAM T "
+						+ "WHERE C.COMPANY_CODE=? AND C.COMPANY_CODE=T.COMPANY_CODE AND T.TEAM_CODE=?";
 				ps1 = conn.prepareStatement(isMember);
 				ps1.setInt(1, Integer.parseInt(company_code));
 				ps1.setInt(2, Integer.parseInt(team_code));
 				rs1 = ps1.executeQuery();
 				rs1.next();
-				if(rs1.getInt("cnt")==0) { // 본사 직원이 아닐경우,
+				if(rs1.getInt("CNT")==0) { // 본사 직원이 아닐경우,
 					
 					String errormsg = "일치하는 본사 정보가 없습니다.";
 					
@@ -106,27 +106,27 @@ public class JoinServlet extends MyServlet {
 					super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
 					
 				}else {
-					String accountInsert = "insert into account(account_id,account_pwd,company_code) values(?,?,?)";
+					String accountInsert = "INSERT INTO ACCOUNT(ACCONT_ID,ACCOUNT_PWD,COMPANY_CODE) VALUES(?,?,?)";
 					ps2 = conn.prepareStatement(accountInsert);
 					ps2.setString(1, account_id);
 					ps2.setString(2, account_pwd);
 					ps2.setInt(3, Integer.parseInt(company_code));
 					ps2.executeUpdate();
 					
-					String memberCode = "select max(member_code) as maxcode from member";
+					String memberCode = "SELECT MAX(MEMBER_CODE) AS MAXCODE FROM MEMBER";
 					ps2 = conn.prepareStatement(memberCode);
 					rs2 = ps2.executeQuery();
 					rs2.next();
-					int code = rs2.getInt("maxcode") + 1;
+					int code = rs2.getInt("MAXCODE") + 1;
 					
-					/*String teamCode = "select team_code from team where team_name=?";
+					/*String teamCode = "SELECT TEAM_CODE FROM TEAM WHERE TEAM_NAME=?";
 					ps2 = conn.prepareStatement(teamCode);
 					ps2.setString(1, team_name);
 					rs2 = ps2.executeQuery();
 					rs2.next();
-					int teamcode = rs2.getInt("team_code");*/
+					int teamcode = rs2.getInt("TEAM_CODE");*/
 					
-					String memberInsert = "insert into member(member_code,team_code,member_name,account_id) values(?,?,?,?)";
+					String memberInsert = "INSERT INTO MEMBER(MEMBER_CODE,TEAM_CODE,MEMBER_NAME,ACCOUNT_ID) VALUES(?,?,?,?)";
 					ps2 = conn.prepareStatement(memberInsert);
 					ps2.setInt(1, code);
 					ps2.setInt(2, Integer.parseInt(team_code));

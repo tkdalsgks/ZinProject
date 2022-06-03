@@ -32,7 +32,7 @@ public class MenulistServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		String account_id = req.getParameter("account_id");
 		
-		String SQL = "select count(*) as cnt from shop where account_id=?";
+		String SQL = "SELECT COUNT(*) AS CNT FROM SHOP WHERE ACCOUNT_ID=?";
 		//System.out.println(account_id);
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -48,11 +48,11 @@ public class MenulistServlet extends HttpServlet {
 			int result = rs.getInt("cnt");
 			String menulist;
 			if(result == 0) {  // 본사직원인 경우
-				menulist = "select * from tmpmenu where menu_access='A' or menu_access='M' and menu_top=0";
+				menulist = "SELECT * FROM TMPMENU WHERE MENU_ACCESS='A' OR MENU_ACCESS='M' AND MENU_TOP=0";
 				//System.out.println("본사");
 				
 			}else {            // 점포주인인 경우
-				menulist = "select * from tmpmenu where menu_access='A' or menu_access='S' and menu_top=0";
+				menulist = "SELECT * FROM TMPMENU WHERE MENU_ACCESS='A' OR MENU_ACCESS='S' AND MENU_TOP=0";
 				//System.out.println("점포");
 			}
 			ps = conn.prepareStatement(menulist);

@@ -29,7 +29,7 @@ public class IdCheckServlet extends MyServlet {
 		
 		System.out.println(account_id);
 		
-		String SQL = "select count(*) as cnt from account where account_id=?";
+		String SQL = "SELECT COUNT(*) AS CNT FROM ACCOUNT WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		HttpSession session = req.getSession();
@@ -41,7 +41,7 @@ public class IdCheckServlet extends MyServlet {
 			
 			rs = ps.executeQuery();
 			rs.next();
-			int result = rs.getInt("cnt");
+			int result = rs.getInt("CNT");
 			
 			if(result == 0) {
 				out.print(true);
