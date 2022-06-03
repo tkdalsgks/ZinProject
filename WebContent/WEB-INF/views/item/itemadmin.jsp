@@ -7,45 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>물품관리</title>
-<style>
-.pagetitle{
-	margin-top : 80px;
-	text-align:center;
-}
-
-.itemtable{
-	text-align : center;
-	width : 70%;
-	margin-right:auto;
-	margin-left:auto;
-	border: 1px solid gray;
-	border-collapse: collapse;
-	margin-bottom : 100px;
-}
-.itemtable th{
-	font-size : 20px;
-	border : 1px solid gray;
-}
-.itemtable tr,td{
-	border : 1px solid gray;
-}
-.insertbtn{
-	display : block;
-	background-color : black;
-	color : white;
-	width : 100px;
-	height : 35px;
-	font-size : 15px;
-	margin-top : 10px;
-	margin-bottom : 20px;
-	float : right;
-	margin-right : 100px;
-}
-.insertbtn:hover{
-	cursor : pointer;
-}
-
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/admin.css" type="text/css">
 <%@ include file="/WEB-INF/views/header.jsp"%>
 
 <script type="text/javascript">
@@ -65,7 +27,7 @@ $(document).ready(function(){
 
 <input id='insert_btn' class='insertbtn' type="button" value="등록하기"><br><br><br>
 
-<table class='itemtable'>
+<table class='admintable'>
 	<tr><th>물품코드</th><th>물품명</th><th>가격</th><th></th><th></th></tr>
 	<%
 		List<ItemDTO> list = (List<ItemDTO>)request.getAttribute("itemlist");

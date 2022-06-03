@@ -7,32 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>점포물품확인</title>
-<style>
-.pagetitle{
-	margin-top : 80px;
-	text-align:center;
-}
 
-.sitemtable{
-	text-align : center;
-	width : 70%;
-	margin-right:auto;
-	margin-left:auto;
-	border: 1px solid gray;
-	border-collapse: collapse;
-	margin-bottom : 100px;
-}
-.sitemtable th{
-	font-size : 20px;
-	border : 1px solid gray;
-}
-.sitemtable tr,td{
-	border : 1px solid gray;
-}
-.noitem{
-	text-align:center;
-}
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/admin.css" type="text/css">
 <%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
@@ -42,7 +18,7 @@
 	List<SitemDTO> list = (List<SitemDTO>)request.getAttribute("sitemlist");
 	if(list.size() != 0){
 %>
-<table class='sitemtable'>
+<table class='admintable'>
 	<tr><th>매장내 물품코드</th><th>물품코드</th><th>수량</th></tr>
 	<%
 		for(SitemDTO dto:list){
@@ -59,7 +35,7 @@
 <%
 	}else{
 %>
-	<h3 class='noitem'>점포에 물품이 없습니다.</h3>
+	<h3 class='notable'>점포에 물품이 없습니다.</h3>
 <%
 	}
 %>

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>주문 처리</title>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/admin.css" type="text/css">
 <%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
@@ -14,7 +15,7 @@
 <%
 	OrdersDTO dto = (OrdersDTO)request.getAttribute("ordersinfo");
 %>
-<table class='orderstable'>
+<table class='admintable'>
 	<form action="dealorder" method="post">
 		<tr>
 			<td>주문번호</td>

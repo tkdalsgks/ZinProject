@@ -10,35 +10,8 @@
 <head>
 <meta charset="UTF-8">
 <title>메뉴</title>
-<style>
-.pagetitle{
-	margin-top : 80px;
-	text-align:center;
-}
 
-.orderdiv{
-	width : 60%;
-	margin-left : auto;
-	margin-right : auto;
-	margin-top : 50px;
-	text-align :center;
-	font-size : 20px;
-}
-
-.orderbtn{
-	background-color : black;
-	color :white;
-	width : 30%;
-	height : 50px;
-	font-size : 17px;
-	margin-top : 50px;
-}
-
-.orderbtn:hover{
-	cursor : pointer;
-}
-
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/order.css" type="text/css">
 <%@ include file="/WEB-INF/views/header.jsp"%>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script>

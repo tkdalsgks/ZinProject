@@ -7,32 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>처리된 주문</title>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/admin.css" type="text/css">
 <%@ include file="/WEB-INF/views/header.jsp"%>
-<style>
-.pagetitle{
-	margin-top : 80px;
-	text-align:center;
-}
-
-.orderstable{
-	text-align : center;
-	width : 70%;
-	margin-right:auto;
-	margin-left:auto;
-	border: 1px solid gray;
-	border-collapse: collapse;
-}
-.orderstable th{
-	font-size : 20px;
-	border : 1px solid gray;
-}
-.orderstable tr,td{
-	border : 1px solid gray;
-}
-.noorder{
-	text-align : center;
-}
-</style>
 </head>
 <body>
 
@@ -41,7 +17,7 @@
 	List<OrdersDTO> list = (List<OrdersDTO>)request.getAttribute("orderslist");
 	if(list.size() != 0){
 %>
-<table class='orderstable'>
+<table class='admintable'>
 	<tr><th>주문코드</th><th>점포코드</th><th>상품코드</th><th>주문수량</th><th>확정수량</th><th>주문일자</th></tr>
 	<%
 		for(OrdersDTO dto:list){
@@ -54,7 +30,7 @@
 <%
 	}else{
 %>
-	<h3 class='noorder'>처리된 주문이 없습니다.</h3>
+	<h3 class='notable'>처리된 주문이 없습니다.</h3>
 <%
 	}
 %>

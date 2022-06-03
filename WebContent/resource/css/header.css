@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+
+body{
+	margin : 0;
+	font-family: 'Gowun Dodum', sans-serif;
+	color : black;
+	weight : 500;
+}
+.header_img{/*로고 이미지*/
+	 padding-top:5px; 
+	 padding-bottom:5px; 
+	 padding-left:20px; 
+	 vertical-align: middle; 
+	 width: 70px;
+	 height:70px;
+}
+
+.JoinLogin{/*로그인, 회원가입 부분 개별*/
+	text-align: right;
+	margin-right:10px;
+	margin-top:0;
+	margin-bottom:5px;
+	padding-top:10px;
+	font-size: 13px;
+}
+
+.header_j { /*JoinLogin 부분의 a 태그(색 변경)*/
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 15px;
+	text-align: left;
+	color : black;
+}
+
+.header_j:hover{
+	cursor : pointer;
+}
+
+.header_hr{
+	width : 100%;
+}
+
+.login_id{
+	margin-right : 20px;
+	font-weight : 600;
+}
+
+.header_li, .header_ul, .bottom_li, .bottom_ul{
+	list-style: none;	
+	padding : 0;
+}
+
+.header_a {
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 20px;
+	text-align: center;
+    display: inline-block;
+    width: 190px;
+    border-radius: 10px;
+}
+
+.header_a:hover{
+	font-weight: 800;
+	font-size:20px;
+}
+nav {/* 메뉴바 */
+	display:inline-block;
+	margin-top: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0;
+	text-align: center;
+	width : 80%;
+}
+nav .header_ul> .header_li {
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+}
+.header_b{
+	text-decoration: none;
+	font-weight: 400;
+	font-size: 15px;
+	text-align: center;
+    display: inline-block;
+    width: 150px;
+    border-radius: 10px;
+}
+.header_b:hover{
+	font-weight: 700;
+	font-size:16px;
+}
+a{
+	color : black;
+}

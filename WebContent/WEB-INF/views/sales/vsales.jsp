@@ -5,13 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>매출확인</title>
-<style>
-.pagetitle{
-	margin-top : 80px;
-	text-align:center;
-}
-
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/admin.css" type="text/css">
 <%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>

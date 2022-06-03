@@ -23,6 +23,6 @@ public class logoutServlet extends MyServlet {
 		req.setCharacterEncoding("UTF-8");
 			
 		session.invalidate();
-		super.forward(req, resp, "/WEB-INF/views/index.jsp");
+		super.forward(req, resp, "/WEB-INF/index.jsp");
 	}
 }

@@ -8,49 +8,7 @@
 <meta charset="UTF-8">
 <title>점포관리</title>
 
-<style>
-.pagetitle{
-	margin-top : 80px;
-	text-align:center;
-}
-
-.itemtable{
-	text-align : center;
-	width : 70%;
-	margin-right:auto;
-	margin-left:auto;
-	border: 1px solid gray;
-	border-collapse: collapse;
-}
-.itemtable th{
-	font-size : 20px;
-	border : 1px solid gray;
-	border-collapse: collapse;
-}
-.itemtable tr,td{
-	border : 1px solid gray;
-	border-collapse: collapse;
-}
-.insertbtn{
-	display : block;
-	background-color : black;
-	color : white;
-	width : 100px;
-	height : 35px;
-	font-size : 15px;
-	margin-top : 10px;
-	margin-bottom : 20px;
-	float : right;
-	margin-right : 100px;
-}
-.insertbtn:hover{
-	cursor : pointer;
-}
-
-.noadmin{
-	text-align:center;
-}
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/admin.css" type="text/css">
 <%@ include file="/WEB-INF/views/header.jsp"%>
 
 <script type="text/javascript">
@@ -78,7 +36,7 @@ $(document).ready(function(){
 	List<ShopDTO> list = (List<ShopDTO>)request.getAttribute("shoplist");
 	if(list.size() != 0){
 %>
-<table class='itemtable'>
+<table class='admintable'>
 	<tr><th>점포코드</th><th>점포명</th><th></th><th></th></tr>
 	<%
 		for(ShopDTO dto:list){
@@ -97,7 +55,7 @@ $(document).ready(function(){
 	}else{
 %>
 
-	<h3 class='noadmin'>관리하고 있는 점포가 없습니다.</h3>
+	<h3 class='notable'>관리하고 있는 점포가 없습니다.</h3>
 <% 
 	}
 %>

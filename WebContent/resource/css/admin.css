@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+.pagetitle{
+	margin-top : 80px;
+	text-align:center;
+}
+
+.admintable{
+	text-align : center;
+	width : 70%;
+	margin-right:auto;
+	margin-left:auto;
+	border: 1px solid gray;
+	border-collapse: collapse;
+	margin-bottom : 100px;
+}
+.admintable th{
+	font-size : 20px;
+	border : 1px solid gray;
+}
+.admintable tr,td{
+	border : 1px solid gray;
+}
+.insertbtn{
+	display : block;
+	background-color : black;
+	color : white;
+	width : 100px;
+	height : 35px;
+	font-size : 15px;
+	margin-top : 10px;
+	margin-bottom : 20px;
+	float : right;
+	margin-right : 100px;
+}
+.insertbtn:hover{
+	cursor : pointer;
+}
+.notable{
+	text-align : center;
+}

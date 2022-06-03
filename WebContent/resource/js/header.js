@@ -1,20 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/header.css" type="text/css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<script>
 window.onload = function(){
 	if($("#sessionid").val() != '' && $("#sessionid").val() != "undefined" && $("#sessionid").val() != null){ 
 		//alert("메뉴가져오기");
@@ -66,28 +49,3 @@ function bottommenu(index,length){
 		}		
 	)
 }
-</script>
-
-</head>
-<body>
-
-	<c:if test="${sessionScope.account_id != null }">
-		<div class="JoinLogin">
-			<input id="sessionid" type="hidden" value='${sessionScope.account_id }'>
-			<span id="login_id" class="login_id">안녕하세요 ${sessionScope.account_id}님!</span>
-			<a class="header_j" href="mypage">마이페이지</a>&nbsp;/
-			<a class="header_j" href="logout" onclick="alert('로그아웃 되었습니다.');">로그아웃</a>
-		</div>
-	</c:if>
-	
-	<a href="${pageContext.request.contextPath}/"><img class="header_img" src="${pageContext.request.contextPath}/resource/img/logo.png"></a>
-	
-	<nav>
-		<ul id="header_ul" class="header_ul">
-			
-		</ul>
-	</nav>
-
-	<hr id="header_hr">
-</body>
-</html>

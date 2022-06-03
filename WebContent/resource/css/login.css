@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+body{
+	font-family: 'Gowun Dodum', sans-serif;
+	color : black;
+	font-weight : 500;
+}
+
+.signupform{
+	margin-top : 150px;
+	width : 50%;
+	margin-right : auto;
+	margin-left : auto;
+	/*margin-top : auto;
+	margin-bottom : auto;*/
+	text-align :center;
+	border : 1px solid black;
+	padding-top : 50px;
+	padding-bottom: 50px;
+	vertical-align:center;
+	margin-bottom :150px;
+}
+
+.loginform{
+	margin-top : 200px;
+	margin-bottom : 200px;
+	border : 1px solid black;
+	width : 50%;
+	height : 400px;
+	margin-right : auto;
+	margin-left : auto;
+	text-align : center;
+	padding-top : 50px;
+	vertical-align : center;
+}
+
+.inputtitle{
+	font-size : 25px;
+	margin-right : 50px;
+}
+
+.btn{
+	margin-top : 30px;
+	background-color : black;
+	color :white;
+	width : 130px;
+	height : 40px;
+	font-size : 17px;
+}
+
+.btn:hover{
+	cursor : pointer;
+}
+
+.input{
+	font-size : 20px;
+	height : 25px;
+	padding-left : 5px;
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+.signupradio{
+	font-size : 18px;
+}
+
+#idchkbtn{
+	padding-right : 10px;
+	padding-left : 10px;
+	height : 35px;
+	margin-left : 20px;
+}
+
+#idchkbtn:hover{
+	cursor:pointer;
+}
+
+.title{
+	padding-bottom : 50px;
+	font-size : 30px;
+}
+
+td{
+	margin-top : 20px;
+	padding-bottom:20px;
+}

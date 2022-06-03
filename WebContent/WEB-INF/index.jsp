@@ -13,42 +13,7 @@
 <meta charset="UTF-8">
 <title>홈</title>
 <%@ include file="/WEB-INF/views/header.jsp"%>
-<style>
-
-body{
-	font-family: 'Gowun Dodum', sans-serif;
-	color : black;
-	weight : 500;
-}
-
-.btn{
-	text-align : center;
-	vertical-align :middle;
-	padding-top : 30px;
-	height : 70px;
-	width : 30%;
-	display : block;
-	margin-top : 150px;
-	margin-bottom : 100px;
-	margin-left : auto;
-	margin-right: auto;
-	font-size : 35px;
-	background-color : black;
-	color : white;
-	text-decoration: none;
-}
-
-.login_info{
-	margin-top : 100px;
-	margin-right :auto;
-	margin-left : auto;
-	width : 50%;
-	height : 300px;
-	font-size : 30px;
-	font-weight : 500;
-	
-}
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/index.css" type="text/css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
