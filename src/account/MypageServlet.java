@@ -1,0 +1,97 @@
+package account;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import account.accountDTO.AccountDTO;
+import util.DBConnection;
+import util.MyServlet;
+
+@WebServlet("/mypage")
+public class MypageServlet extends MyServlet {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Connection conn = DBConnection.getConnection();
+		
+		resp.setContentType("text/html;charset=UTF-8");
+		HttpSession session = req.getSession();
+		String account_id = (String)session.getAttribute("account_id");
+		PrintWriter out = resp.getWriter();
+		
+		String SQL = "select * from account where account_id=?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		req.setCharacterEncoding("UTF-8");
+		
+		try {
+			ps = conn.prepareStatement(SQL);
+			ps.setString(1, account_id);
+			
+			rs = ps.executeQuery();
+			AccountDTO accountdto = new AccountDTO();
+			if(rs.next()) {
+				accountdto.setAccount_id(account_id);
+				accountdto.setAccount_pwd(rs.getString("account_pwd"));
+			}
+			
+			String isShop = "select count(*) as cnt from shop where account_id=?";
+			ps = conn.prepareStatement(isShop);
+			ps.setString(1, account_id);
+			rs = ps.executeQuery();
+			rs.next();
+			int result = rs.getInt("cnt");
+			
+			if(result ==0) { // 본사직원이라면
+				String membername = "select member_name from member where account_id=?";
+				ps = conn.prepareStatement(membername);
+				ps.setString(1, account_id);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					String name = rs.getString("member_name");
+					accountdto.setMember_name(name);
+					accountdto.setShop_name(null);
+				}
+			}else {	// 점포주인이라면
+				String shopname = "select shop_name from shop where account_id=?";
+				ps = conn.prepareStatement(shopname);
+				ps.setString(1, account_id);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					String name = rs.getString("shop_name");
+					accountdto.setShop_name(name);
+					accountdto.setMember_name(null);
+				}
+			}
+			
+			req.setAttribute("myinfo", accountdto);
+			rs.close();
+			ps.close();
+			
+			
+		} catch(SQLException e) {
+			System.out.println("DB 접속 오류거나 SQL 문장 오류");
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch(SQLException e) {}
+		}
+		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("mypage.jsp");
+		requestDispatcher.forward(req, resp);
+	}
+
+}
