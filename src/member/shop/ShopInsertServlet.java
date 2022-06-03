@@ -50,7 +50,7 @@ public class ShopInsertServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "shopinsert.jsp");
+		super.forward(req, resp, "/WEB-INF/views/shop/shopinsert.jsp");
 	}
 
 	@Override

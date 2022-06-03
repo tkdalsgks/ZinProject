@@ -19,7 +19,7 @@ public class DeleteServlet extends MyServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.forward(req, resp, "delete.jsp");
+		super.forward(req, resp, "/WEB-INF/views/account/delete.jsp");
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class DeleteServlet extends MyServlet {
 			delete = ps.executeUpdate();
 			
 			session.invalidate();
-			resp.sendRedirect("index.jsp");
+			super.forward(req, resp, "/WEB-INF/views/index.jsp");
 			
 		} catch(SQLException e) {
 			System.out.println("DB 접속 오류거나 SQL 문장 오류");

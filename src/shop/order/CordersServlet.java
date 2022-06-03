@@ -73,7 +73,7 @@ public class CordersServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "corders.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/corders.jsp");
 	}
 
 }

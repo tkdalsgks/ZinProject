@@ -16,7 +16,7 @@ public class SalesServlet extends MyServlet {
    
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.forward(req, resp, "sales.jsp");
+		super.forward(req, resp, "/WEB-INF/views/sales/sales.jsp");
 	}
 
 }

@@ -33,7 +33,7 @@
 	text-align : center;
 }
 </style>
-<%@ include file="header.jsp"%>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
 

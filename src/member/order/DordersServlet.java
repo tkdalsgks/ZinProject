@@ -98,7 +98,7 @@ Connection conn = DBConnection.getConnection();
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "dorders.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/dorders.jsp");
 	}
 
 }

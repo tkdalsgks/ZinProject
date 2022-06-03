@@ -78,7 +78,7 @@ public class ShopAdminServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "shopadmin.jsp");
+		super.forward(req, resp, "/WEB-INF/views/shop/shopadmin.jsp");
 	}
 
 }

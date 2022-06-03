@@ -98,7 +98,7 @@ public class NdordersServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "ndorders.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/ndorders.jsp");
 	}
 
 }

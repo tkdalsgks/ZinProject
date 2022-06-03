@@ -71,7 +71,7 @@ public class ItemAdminServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "itemadmin.jsp");
+		super.forward(req, resp, "/WEB-INF/views/item/itemadmin.jsp");
 	}
 
 }

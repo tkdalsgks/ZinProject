@@ -63,7 +63,7 @@ public class ShopModServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "shopmod.jsp");
+		super.forward(req, resp, "/WEB-INF/views/shop/shopmod.jsp");
 	}
 
 	@Override

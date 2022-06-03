@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>매출확인</title>
+<title>총매출</title>
 <style>
 .pagetitle{
 	margin-top : 80px;
@@ -12,11 +12,11 @@
 }
 
 </style>
-<%@ include file="header.jsp"%>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
 
-<h1 class='pagetitle'>매출확인 페이지입니다.</h1>
+<h1 class='pagetitle'>총매출 페이지입니다.</h1>
 
 </body>
 </html>

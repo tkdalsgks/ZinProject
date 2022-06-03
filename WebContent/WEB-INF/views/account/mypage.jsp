@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
-<%@ include file="header.jsp"%>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
 

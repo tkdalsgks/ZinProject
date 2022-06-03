@@ -73,7 +73,7 @@ public class AordersServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "aorders.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/aorders.jsp");
 	}
 
 }

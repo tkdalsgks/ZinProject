@@ -23,7 +23,7 @@ public class OrderServlet extends MyServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("ordermsg");
-		resp.sendRedirect("order.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/order.jsp");
 	}
 
 	@Override
@@ -111,6 +111,6 @@ public class OrderServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		resp.sendRedirect("order.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/order.jsp");
 	}
 }

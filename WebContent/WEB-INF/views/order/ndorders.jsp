@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>처리된 주문</title>
-<%@ include file="header.jsp"%>
+<title>미처리 주문</title>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 <style>
 .pagetitle{
 	margin-top : 80px;
@@ -29,6 +29,7 @@
 .orderstable tr,td{
 	border : 1px solid gray;
 }
+
 .noorder{
 	text-align : center;
 }
@@ -36,17 +37,25 @@
 </head>
 <body>
 
-<h1 class='pagetitle'>처리된 주문 페이지입니다.</h1>
+<h1 class='pagetitle'>미처리 주문 페이지입니다.</h1>
 <%
 	List<OrdersDTO> list = (List<OrdersDTO>)request.getAttribute("orderslist");
-	if(list.size() != 0){
+	if(list.size()!=0){
 %>
 <table class='orderstable'>
-	<tr><th>주문코드</th><th>점포코드</th><th>상품코드</th><th>주문수량</th><th>확정수량</th><th>주문일자</th></tr>
+	<tr><th>주문코드</th><th>점포코드</th><th>상품코드</th><th>주문수량</th><th>주문일자</th><th></th></tr>
 	<%
+		
 		for(OrdersDTO dto:list){
 	%>
-		<tr><td><%=dto.getOrders_code() %></td><td><%=dto.getShop_code() %></td><td><%=dto.getItem_code() %></td><td><%=dto.getOrders_amount() %></td><td><%=dto.getOrders_camount() %></td><td><%=dto.getOrders_date() %></td></tr>
+		<tr>
+			<td><%=dto.getOrders_code() %></td>
+			<td><%=dto.getShop_code() %></td>
+			<td><%=dto.getItem_code() %></td>
+			<td><%=dto.getOrders_amount() %></td>
+			<td><%=dto.getOrders_date() %></td>
+			<td><a href='${pageContext.request.contextPath}/dealorder?code=<%=dto.getOrders_code()%>'>주문처리하기</a></td>
+		</tr>
 	<%
 		}
 	%>
@@ -54,10 +63,11 @@
 <%
 	}else{
 %>
-	<h3 class='noorder'>처리된 주문이 없습니다.</h3>
+	<h3 class='noorder'>미처리된 주문이 없습니다.</h3>
 <%
 	}
 %>
+
 
 </body>
 </html>

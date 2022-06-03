@@ -39,7 +39,7 @@
 }
 
 </style>
-<%@ include file="header.jsp"%>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script>
 <script>

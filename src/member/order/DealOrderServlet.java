@@ -58,7 +58,7 @@ public class DealOrderServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "dealorder.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/dealorder.jsp");
 	}
 
 	@Override

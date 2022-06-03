@@ -20,7 +20,7 @@ public class loginServlet extends MyServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.forward(req, resp, "login.jsp");
+		super.forward(req, resp, "/WEB-INF/views/account/login.jsp");
 	}
 
 	@Override
@@ -117,10 +117,10 @@ public class loginServlet extends MyServlet {
 					String cPath = req.getContextPath();
 					resp.sendRedirect(cPath);
 				} else {
-					resp.sendRedirect("error.jsp");
+					super.forward(req, resp, "/WEB-INF/views/error.jsp");
 				}
 			}else {
-				resp.sendRedirect("error.jsp");
+				super.forward(req, resp, "/WEB-INF/views/error.jsp");
 			}
 			
 		} catch(SQLException e) {

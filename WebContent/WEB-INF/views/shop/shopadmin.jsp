@@ -51,7 +51,7 @@
 	text-align:center;
 }
 </style>
-<%@ include file="header.jsp"%>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 
 <script type="text/javascript">
 $(document).ready(function(){

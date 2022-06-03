@@ -60,7 +60,7 @@ public class ItemInsertServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "iteminsert.jsp");
+		super.forward(req, resp, "/WEB-INF/views/item/iteminsert.jsp");
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class ItemInfoServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "iteminfo.jsp");
+		super.forward(req, resp, "/WEB-INF/views/item/iteminfo.jsp");
 	}
 
 }

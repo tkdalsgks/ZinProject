@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리 점포 등록</title>
-<%@ include file="header.jsp"%>
+<%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
 

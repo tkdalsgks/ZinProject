@@ -58,7 +58,7 @@ public class ItemModServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "itemmod.jsp");
+		super.forward(req, resp, "/WEB-INF/views/item/itemmod.jsp");
 	}
 
 	@Override

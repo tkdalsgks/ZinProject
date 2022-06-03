@@ -23,7 +23,7 @@ public class JoinServlet extends MyServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.removeAttribute("errormsg");
-		super.forward(req, resp, "join.jsp");
+		super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
 	}
 
 	@Override
@@ -59,8 +59,7 @@ public class JoinServlet extends MyServlet {
 					System.out.println(errormsg);
 					session.setAttribute("errormsg", errormsg);
 					
-					RequestDispatcher requestDispatcher = req.getRequestDispatcher("join.jsp");
-					requestDispatcher.forward(req, resp);
+					super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
 					
 				}else {
 					String companyCode = "select company_code from shop where shop_code=?";
@@ -84,7 +83,6 @@ public class JoinServlet extends MyServlet {
 					ps2.executeUpdate();
 					
 					String cPath = req.getContextPath();
-					//resp.sendRedirect("login.jsp");
 					resp.sendRedirect(cPath + "/login");
 				}
 				
@@ -105,8 +103,7 @@ public class JoinServlet extends MyServlet {
 					
 					session.setAttribute("errormsg", errormsg);
 					
-					RequestDispatcher requestDispatcher = req.getRequestDispatcher("join.jsp");
-					requestDispatcher.forward(req, resp);
+					super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
 					
 				}else {
 					String accountInsert = "insert into account(account_id,account_pwd,company_code) values(?,?,?)";

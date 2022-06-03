@@ -69,7 +69,7 @@ public class ShopItemServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "shopitem.jsp");
+		super.forward(req, resp, "/WEB-INF/views/shop/shopitem.jsp");
 	}
 
 }

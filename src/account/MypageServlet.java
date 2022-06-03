@@ -90,8 +90,7 @@ public class MypageServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("mypage.jsp");
-		requestDispatcher.forward(req, resp);
+		super.forward(req, resp, "/WEB-INF/views/account/mypage.jsp");
 	}
 
 }
