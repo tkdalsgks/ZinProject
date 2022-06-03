@@ -78,7 +78,7 @@ public class Dorders extends HttpServlet {
 			}
 			List<OrdersDTO> orders = new ArrayList<>();
 			for(int i=0;i<shop.size();i++) {
-				String orderslist = "select * from orders where shop_code=? and orders_sort=1";
+				String orderslist = "select * from orders where shop_code=? and orders_sort=1 order by orders_code desc";
 				ps = conn.prepareStatement(orderslist);
 				ps.setInt(1, shop.get(i).getShop_code());
 				rs = ps.executeQuery();

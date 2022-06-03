@@ -80,7 +80,7 @@ public class Ndorders extends HttpServlet {
 			}
 			List<OrdersDTO> orders = new ArrayList<>();
 			for(int i=0;i<shop.size();i++) {
-				String orderslist = "select * from orders where shop_code=? and orders_sort=0";
+				String orderslist = "select * from orders where shop_code=? and orders_sort=0 order by orders_code desc";
 				ps = conn.prepareStatement(orderslist);
 				ps.setInt(1, shop.get(i).getShop_code());
 				rs = ps.executeQuery();

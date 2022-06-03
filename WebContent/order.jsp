@@ -48,40 +48,23 @@
 </head>
 <body>
 
-<%-- <%
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	String url = "jdbc:oracle:thin:@168.126.28.44:1521:PKGORCL";
-	String id = "khw";
-	String pw = "khwpw";
-	
-	Connection conn = DriverManager.getConnection(url, id, pw);
-	
-	String SQL = "select item_name, item_price from item";
-	PreparedStatement ps = null;
-	ResultSet rs = null;
-	String item_name = null;
-	int item_price = 0;
-	ps = conn.prepareStatement(SQL);
-	rs = ps.executeQuery();
-	if(rs.next()) {
-		item_name = rs.getString("item_name");
-		item_price = rs.getInt("item_price");
-	}
-	
-	String ordersql = "insert into ";
-%> --%>
-
 <h1 class='pagetitle'>주문하기 페이지입니다.</h1>
 <div class='orderdiv'>
 <form action="p.orders" method="post">
 	점포코드 <input type="number" name="shop_code" required><br>
 	상품코드 <input id='item_code' type="number" name="item_code" onchange="totalprice" required><br>
-	주문수량 <input id='orders_amount' type="number" name="orders_amount" onchange="totalprice" required><br>
+	주문수량 <input id='orders_amount' type="number" name="orders_amount" onchange="totalprice" required><br><br>
 	<!-- 주문종류 <input type="text" name="orders_sort"><br><br>-->
 	<div id='totalprice'></div>
 	<input class='orderbtn' type="submit" value="주문하기">
 </form>
 </div>
+<% 
+	String ordermsg = (String)session.getAttribute("ordermsg");
+	if(ordermsg != null){
+		out.println("<script>alert('"+ ordermsg +"');</script>");
+	}
+%>
 
 </body>
 </html>
