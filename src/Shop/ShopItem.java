@@ -1,4 +1,4 @@
-package Menu;
+package Shop;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,29 +18,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
+import dto.ItemDTO;
+import dto.SitemDTO;
 
-/**
- * Servlet implementation class Bottommenu
- */
-@WebServlet("/bottommenu")
-public class Bottommenu extends HttpServlet {
+@WebServlet("/shopitem")
+public class ShopItem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+    
 	String url = "jdbc:oracle:thin:@168.126.28.44:1521:PKGORCL";
 	String id = "khw";
 	String pw = "khwpw";
-       
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html;charset=UTF-8");
+		HttpSession session = req.getSession();
+		String account_id = (String)session.getAttribute("account_id");
 		PrintWriter out = resp.getWriter();
-		String menu_top = req.getParameter("menu_top");
 		
 		Connection conn = null;
 		
-		String SQL = "select * from tmpmenu where menu_top=?";
+		String SQL = "select shop_code from shop where account_id=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
@@ -47,28 +47,27 @@ public class Bottommenu extends HttpServlet {
 			conn = DriverManager.getConnection(url, id, pw);
 			
 			ps = conn.prepareStatement(SQL);
-			ps.setInt(1, Integer.parseInt(menu_top));
+			ps.setString(1, account_id);
 			
 			rs = ps.executeQuery();
+			rs.next();
+			int shop_code = rs.getInt("shop_code");
 			
-			List<MenuDTO> menu = new ArrayList<>();
-			
+			String itemlist = "select * from sitem where shop_code=? order by sitem_code";
+			ps = conn.prepareStatement(itemlist);
+			ps.setInt(1, shop_code);
+			rs = ps.executeQuery();
+			List<SitemDTO> sitem = new ArrayList<>();
 			while(rs.next()) {
-				MenuDTO dto = new MenuDTO();
-				dto.setCompany_code(rs.getInt("company_code"));
-				dto.setMenu_code(rs.getInt("menu_code"));
-				dto.setMenu_name(rs.getString("menu_name"));
-				dto.setMenu_top(rs.getInt("menu_top"));
-				dto.setMenu_access(rs.getString("menu_access"));
-				dto.setMenu_url(rs.getString("menu_url"));
-				menu.add(dto);
+				SitemDTO dto = new SitemDTO();
+				dto.setSitem_code(rs.getInt("sitem_code"));
+				dto.setShop_code(rs.getInt("shop_code"));
+				dto.setItem_code(rs.getInt("item_code"));
+				dto.setSitem_amount(rs.getInt("sitem_amount"));
+				sitem.add(dto);
 			}
 			
-			Gson gson= new Gson();
-			String value = gson.toJson(menu);
-			//System.out.println(menu_top +"번째 메뉴 mouseover");
-			//System.out.println(value);
-			out.print(value);
+			req.setAttribute("sitemlist", sitem);
 			
 			
 			
@@ -82,6 +81,11 @@ public class Bottommenu extends HttpServlet {
 				conn.close();
 			} catch(SQLException e) {}
 		}
+		
+		
+		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("shopitem.jsp");
+		requestDispatcher.forward(req, resp);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -7,9 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>점포관리</title>
-<%@ include file="header.jsp"%>
+
 <style>
 .pagetitle{
+	margin-top : 80px;
 	text-align:center;
 }
 
@@ -45,22 +46,34 @@
 .insertbtn:hover{
 	cursor : pointer;
 }
+
+.noadmin{
+	text-align:center;
+}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%@ include file="header.jsp"%>
 
 <script type="text/javascript">
-window.onload = function(){
+$(document).ready(function(){
+	//alert("페이지 onload");
 	$("#insert_btn").on("click",function(){
-		location.href = "/"
+		//alert("클릭");
+		location.href = "${pageContext.request.contextPath}/shopinsert";
 	})	
-}
+});
+
 </script>
+
 </head>
+
 <body>
 
 <h1 class='pagetitle'>점포관리 페이지입니다.</h1>
 
 <input id='insert_btn' class='insertbtn' type="button" value="등록하기">
+	<br>
+	<br>
+	<br>
 <%
 	List<ShopDTO> list = (List<ShopDTO>)request.getAttribute("shoplist");
 	if(list.size() != 0){
@@ -70,7 +83,12 @@ window.onload = function(){
 	<%
 		for(ShopDTO dto:list){
 	%>
-		<tr><td><%=dto.getShop_code() %></td><td><%=dto.getShop_name() %></td><td><a href=''>수정</a></td><td><a href=''>삭제</a></td></tr>
+		<tr>
+			<td><%=dto.getShop_code() %></td>
+			<td><%=dto.getShop_name() %></td>
+			<td><a href='${pageContext.request.contextPath}/shopmod?code=<%=dto.getShop_code()%>'>수정</a></td>
+			<td><a href='${pageContext.request.contextPath}/shopdelete?code=<%=dto.getShop_code()%>'>삭제</a></td>
+		</tr>
 	<%
 		}
 	%>
@@ -78,7 +96,8 @@ window.onload = function(){
 <%
 	}else{
 %>
-	<h3>관리하고 있는 점포가 없습니다.</h3>
+
+	<h3 class='noadmin'>관리하고 있는 점포가 없습니다.</h3>
 <% 
 	}
 %>

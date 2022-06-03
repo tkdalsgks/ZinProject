@@ -25,22 +25,29 @@
 	<%
 		if(account.getMember_name() != null){
 	%>
+	<tr>
 		<td>이름</td>
-		<td><%=account.getMember_name() %>
+		<td><%=account.getMember_name() %></td>
+	</tr>
 	<%
 		}
 	%>
 	<%
 		if(account.getShop_name() != null){
 	%>
+	<tr>
 		<td>점포명</td>
-		<td><%=account.getShop_name() %>
+		<td><%=account.getShop_name() %></td>
+	</tr>
 	<%
 		}
 	%>
 	
 	<tr>
 		<td colspan='2'><button>수정하기</button></td>
+	</tr>
+	<tr>
+		<td colspan='2'><a href="delete">회원탈퇴</a></td>
 	</tr>
 </table>
 

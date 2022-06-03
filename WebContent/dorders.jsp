@@ -10,6 +10,7 @@
 <%@ include file="header.jsp"%>
 <style>
 .pagetitle{
+	margin-top : 80px;
 	text-align:center;
 }
 
@@ -27,6 +28,9 @@
 }
 .orderstable tr,td{
 	border : 1px solid gray;
+}
+.noorder{
+	text-align : center;
 }
 </style>
 </head>
@@ -50,7 +54,7 @@
 <%
 	}else{
 %>
-	<h3>처리된 주문이 없습니다.</h3>
+	<h3 class='noorder'>처리된 주문이 없습니다.</h3>
 <%
 	}
 %>

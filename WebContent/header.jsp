@@ -151,7 +151,7 @@ function bottommenu(index,length){
 			data : {"menu_top" : index},
 			dataType : "json",
 			success : function(result){
-				for(var i=0;i<length;i++){
+				for(var i=0;i<=length;i++){
 					$("#bottom_ul"+i).empty();
 				}
 				for(var i=0;i<result.length;i++){							

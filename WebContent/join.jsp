@@ -27,6 +27,7 @@ body{
 	padding-top : 50px;
 	padding-bottom: 50px;
 	vertical-align:center;
+	margin-bottom :150px;
 }
 
 .inputtitle{
@@ -71,12 +72,13 @@ body{
 }
 
 .title{
+	padding-bottom : 50px;
 	font-size : 30px;
 }
 
-tr{
+td{
 	margin-top : 20px;
-	margin-bottom:20px;
+	padding-bottom:20px;
 }
 
 </style>
@@ -170,6 +172,7 @@ function idcheck(){
 				<input id='idchkbtn' type="button" value="아이디 중복 확인" onclick="idcheck()">
 				<input type="hidden" id="checkedid" value="false">
 			</td>
+			
 		</tr>
 		<tr>
 			<td class='inputtitle'>비밀번호</td>

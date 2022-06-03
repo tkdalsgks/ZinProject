@@ -52,7 +52,7 @@ public class ItemAdmin extends HttpServlet {
 			rs.next();
 			int company_code = rs.getInt("company_code");
 			
-			String itemlist = "select * from item where company_code=?";
+			String itemlist = "select * from item where company_code=? order by item_code";
 			ps = conn.prepareStatement(itemlist);
 			ps.setInt(1, company_code);
 			rs = ps.executeQuery();

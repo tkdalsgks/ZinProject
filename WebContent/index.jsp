@@ -26,14 +26,14 @@ body{
 	vertical-align :middle;
 	padding-top : 30px;
 	height : 70px;
-	width : 40%;
+	width : 30%;
 	display : block;
 	margin-top : 150px;
 	margin-bottom : 100px;
 	margin-left : auto;
 	margin-right: auto;
 	font-size : 35px;
-	background-color : gray;
+	background-color : black;
 	color : white;
 	text-decoration: none;
 }
@@ -98,11 +98,11 @@ body{
 			<% } %>
 		</table>
 		<br>
-		<a href="logout">로그아웃</a>
+		<%-- <a href="logout">로그아웃</a>
 		<br>
 		<a href="delete">회원탈퇴</a>
 		<br>
-		<a href="menu">메뉴</a>
+		<a href="menu">메뉴</a>--%>
 <%	
 	}
 %>

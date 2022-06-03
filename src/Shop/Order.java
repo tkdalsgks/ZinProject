@@ -1,4 +1,4 @@
-package Menu;
+package Shop;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +25,8 @@ public class Order extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.sendRedirect("order.jsp");
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("order.jsp");
+		requestDispatcher.forward(req, resp);
 	}
 
 	@Override
@@ -41,8 +43,8 @@ public class Order extends HttpServlet {
 		int shop_code = Integer.parseInt(req.getParameter("shop_code"));
 		int item_code = Integer.parseInt(req.getParameter("item_code"));
 		int orders_amount = Integer.parseInt(req.getParameter("orders_amount"));
-		int orders_camount = orders_amount;
-		int orders_sort = Integer.parseInt(req.getParameter("orders_sort"));
+		int orders_camount = 0;
+		//int orders_sort = Integer.parseInt(req.getParameter("orders_sort"));
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -68,15 +70,15 @@ public class Order extends HttpServlet {
 			rs2.next();
 			int itemcode = rs2.getInt("itemcode");
 			
-			String SQL = "insert into orders(orders_code,shop_code,item_code,orders_amount,orders_camount,orders_date,orders_sort) "
-					+ "values(?, ?, ?, ?, ?, sysdate, ?)";
+			String SQL = "insert into orders(orders_code,shop_code,item_code,orders_amount,orders_camount,orders_date) "
+					+ "values(?, ?, ?, ?, ?, sysdate)";
 			ps2 = conn.prepareStatement(SQL);
 			ps2.setInt(1, ordercode);
 			ps2.setInt(2, shopcode);
 			ps2.setInt(3, itemcode);
 			ps2.setInt(4, orders_amount);
 			ps2.setInt(5, orders_camount);
-			ps2.setInt(6, orders_sort);
+			//ps2.setInt(6, orders_sort);
 			ps2.executeUpdate();
 			
 			String sitemAmount = "select sitem_amount as sitemamount from sitem where sitem_code=?";
@@ -106,7 +108,8 @@ public class Order extends HttpServlet {
 			} catch(SQLException e) {}
 		}
 		
-		resp.sendRedirect("order.jsp");
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("order.jsp");
+		requestDispatcher.forward(req, resp);
 		
 	}
 }
