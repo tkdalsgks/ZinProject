@@ -25,7 +25,7 @@ public class DordersServlet extends MyServlet {
 
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-Connection conn = DBConnection.getConnection();
+		Connection conn = DBConnection.getConnection();
 		
 		resp.setContentType("text/html;charset=UTF-8");
 		HttpSession session = req.getSession();

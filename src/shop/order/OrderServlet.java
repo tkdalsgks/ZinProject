@@ -29,7 +29,7 @@ public class OrderServlet extends MyServlet {
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection conn = DBConnection.getConnection();
-		
+		resp.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = resp.getWriter();
 		String ordermsg = null;
 		
@@ -85,11 +85,11 @@ public class OrderServlet extends MyServlet {
 			
 			if(amountresult < 0) {
 				ordermsg = "주문수량이 재고량보다 많습니다.";
-				session.setAttribute("ordermsg", ordermsg);
+				req.setAttribute("ordermsg", ordermsg);
 				
 			} else if(orders_amount == 0) {
 				ordermsg = "주문수량을 제대로 입력해주세요.";
-				session.setAttribute("ordermsg", ordermsg);
+				req.setAttribute("ordermsg", ordermsg);
 			} else {
 				String sitemCode = "update sitem set sitem_amount=? where sitem_code=?";
 				ps = conn.prepareStatement(sitemCode);
@@ -99,7 +99,7 @@ public class OrderServlet extends MyServlet {
 				System.out.println("실행완료");
 				
 				ordermsg = "주문이 완료되었습니다.";
-				session.setAttribute("ordermsg", ordermsg);
+				req.setAttribute("ordermsg", ordermsg);
 			}
 			
 		} catch(SQLException e) {

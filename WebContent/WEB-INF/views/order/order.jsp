@@ -60,7 +60,7 @@
 </form>
 </div>
 <% 
-	String ordermsg = (String)session.getAttribute("ordermsg");
+	String ordermsg = (String)request.getAttribute("ordermsg");
 	if(ordermsg != null){
 		out.println("<script>alert('"+ ordermsg +"');</script>");
 	}
