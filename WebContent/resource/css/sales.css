@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+.pagetitle {
+	margin-top : 80px;
+	text-align: center;
+}
+
+.sales_one {
+	border: 1px solid black;
+	float: left;
+	width: 1100px;
+	height: 350px;
+	margin-right: 30px;
+	overflow: scroll;
+}
+
+.sales_two {
+	display: inline-block;
+	border: 1px solid black;
+	width: 300px;
+	height: 350px;
+	margin-left: 30px;
+}
+
+.sales_three {
+	display: flex;
+	margin-top: 30px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.salestable {
+	text-align : center;
+	width : 70%;
+	height: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	border: none;
+	border-collapse: collapse;
+	overflow: auto;
+}
+.salestable th {
+	font-size : 20px;
+	font-weight: bold;
+	border : none;
+}
+.salestable tr,td {
+	border : none;
+}
+
+.sales_price,
+.sales_amount {
+	border: none;
+    width: 50px;
+    text-align: center;
+    font-size: 15px;
+    outline: none;
+    color: transparent;
+	text-shadow: 0 0 0 black;
+}
+.sales_number {
+	width: 50px;
+}
+
+.total_amount {
+	width: 80px;
+	text-align: center;
+	font-size: 20px;
+	border: none;
+	outline: none;
+	color: transparent;
+	text-shadow: 0 0 0 black;
+	margin-top: 10px;
+}

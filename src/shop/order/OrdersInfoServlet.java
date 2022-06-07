@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import util.MyServlet;
 
@@ -18,6 +19,8 @@ public class OrdersInfoServlet extends MyServlet {
 
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		session.removeAttribute("ordermsg");
 		super.forward(req, resp, "/WEB-INF/views/order/order.jsp");
 	}
 
