@@ -18,8 +18,8 @@ import member.order.orderDTO.OrdersDTO;
 import util.DBConnection;
 import util.MyServlet;
 
-@WebServlet("/a.orders")
-public class AordersServlet extends MyServlet {
+@WebServlet("/o.orders")
+public class OordersServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -32,6 +32,8 @@ public class AordersServlet extends MyServlet {
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		PreparedStatement ps1 = null;
+		ResultSet rs1 = null;
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
@@ -44,9 +46,10 @@ public class AordersServlet extends MyServlet {
 			rs.next();
 			int shop_code = rs.getInt("shop_code");
 			
-			String orderslist = "SELECT * FROM ORDERS WHERE SHOP_CODE=? AND ORDERS_AMOUNT=ORDERS_CAMOUNT ORDER BY ORDERS_CODE";
+			String orderslist = "SELECT * FROM ORDERS WHERE SHOP_CODE=? ORDER BY ORDERS_CODE DESC";
 			
 			List<OrdersDTO> orders = new ArrayList<>();
+			List<String> itemname = new ArrayList<>();
 			
 			ps = conn.prepareStatement(orderslist);
 			ps.setInt(1, shop_code);
@@ -61,9 +64,19 @@ public class AordersServlet extends MyServlet {
 				ordersdto.setOrders_date(rs.getDate("orders_date"));
 				ordersdto.setOrders_sort(rs.getInt("orders_sort"));
 				orders.add(ordersdto);
+				
+				String itemName = "SELECT ITEM_NAME FROM ITEM WHERE ITEM_CODE=?";
+				ps1 = conn.prepareStatement(itemName);
+				ps1.setInt(1,ordersdto.getItem_code());
+				
+				rs1 = ps1.executeQuery();
+				rs1.next();
+				String item_name = rs1.getString("item_name");
+				itemname.add(item_name);
+				
 			}
 			req.setAttribute("orderslist", orders);
-			
+			req.setAttribute("itemname", itemname);
 		} catch(SQLException e) {
 			System.out.println("DB 접속 오류거나 SQL 문장 오류");
 			e.printStackTrace();
@@ -73,7 +86,7 @@ public class AordersServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "/WEB-INF/views/order/aorders.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/oorders.jsp");
 	}
 
 }

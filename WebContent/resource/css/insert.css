@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+.pagetitle{
+	margin-top : 80px;
+	text-align:center;
+}
+
+.inserttable{
+	text-align : center;
+	width : 70%;
+	margin-right:auto;
+	margin-left:auto;
+	margin-bottom : 100px;
+	padding-left:50px;
+	padding-right:50px;
+	border-spacing: 30px;
+
+}
+
+.inserttable tr,td{
+	padding-top : 5px;
+	padding-bottom : 5px;
+}
+
+.insertname{
+	font-size : 20px;
+	font-weight : 600;
+	margin-left : 200px;
+}
+
+.insertinput, .insertcontext{
+	font-size : 18px;
+	font-weight : 500;
+	padding-top : 5px;
+	padding-bottom : 5px;
+	width : 80%;
+	margin-left : auto;
+	margin-right: auto;
+}
+
+.insertbtn{
+	height : 40px;
+	width : 40%;
+	margin-left : auto;
+	margin-right : auto;
+	background-color : black;
+	color : white;
+	font-size : 20px;
+	margin-top : 10px;
+	margin-bottom : 10px;
+}

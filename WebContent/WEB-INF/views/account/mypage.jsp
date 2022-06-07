@@ -8,6 +8,12 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <%@ include file="/WEB-INF/views/header.jsp"%>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resource/css/mypage.css" type="text/css">
+<script>
+function mypagemod(){
+	location.href = "mypagemod";
+}
+</script>
 </head>
 <body>
 
@@ -17,10 +23,10 @@
 
 %>
 
-<table class='mypagetable'>
+<table class='admintable'>
 	<tr>
 		<td>아이디</td>
-		<td><%=account.getAccount_id() %>
+		<td><%=account.getAccount_id() %></td>
 	</tr>
 	<%
 		if(account.getMember_name() != null){
@@ -44,10 +50,10 @@
 	%>
 	
 	<tr>
-		<td colspan='2'><button>수정하기</button></td>
+		<td colspan='2'><button class='mypagebtn' onclick='mypagemod()'>수정하기</button></td>
 	</tr>
 	<tr>
-		<td colspan='2'><a href="delete">회원탈퇴</a></td>
+		<td colspan='2'><a href="delete" class='mypagea'>회원탈퇴</a></td>
 	</tr>
 </table>
 

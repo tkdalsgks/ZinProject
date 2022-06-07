@@ -2,10 +2,14 @@ package member.order;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,8 +23,8 @@ import shop.shopDTO.ShopDTO;
 import util.DBConnection;
 import util.MyServlet;
 
-@WebServlet("/d.orders")
-public class DordersServlet extends MyServlet {
+@WebServlet("/dorders_date")
+public class DordersDateServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -30,13 +34,17 @@ public class DordersServlet extends MyServlet {
 		resp.setContentType("text/html;charset=UTF-8");
 		HttpSession session = req.getSession();
 		String account_id = (String)session.getAttribute("account_id");
-		
-		String SQL = "SELECT COMPANY_CODE FROM ACCOUNT WHERE ACCOUNT_ID=?";
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		req.setCharacterEncoding("UTF-8");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
+			Date start_date = Date.valueOf(req.getParameter("start_date"));
+			Date end_date = Date.valueOf(req.getParameter("end_date"));
+			
+			String SQL = "SELECT COMPANY_CODE FROM ACCOUNT WHERE ACCOUNT_ID=?";
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			req.setCharacterEncoding("UTF-8");
+			
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, account_id);
 			
@@ -71,10 +79,12 @@ public class DordersServlet extends MyServlet {
 			List<OrdersDTO> orders = new ArrayList<>();
 			for(int i=0;i<shop.size();i++) {
 				String orderslist = "SELECT * FROM ORDERS "
-						+ "WHERE SHOP_CODE=? AND ORDERS_SORT=1 "
+						+ "WHERE SHOP_CODE=? AND ORDERS_SORT=1 AND ORDERS_DATE>=? AND ORDERS_DATE<=to_date(?)+1"
 						+ "ORDER BY ORDERS_CODE DESC";
 				ps = conn.prepareStatement(orderslist);
 				ps.setInt(1, shop.get(i).getShop_code());
+				ps.setDate(2, start_date);
+				ps.setDate(3,end_date);
 				rs = ps.executeQuery();
 				while(rs.next()) {
 					OrdersDTO ordersdto = new OrdersDTO();
@@ -91,16 +101,18 @@ public class DordersServlet extends MyServlet {
 			}
 			req.setAttribute("orderslist", orders);
 			
-		} catch(SQLException e) {
+			
+		} catch (SQLException e) {
 			System.out.println("DB 접속 오류거나 SQL 문장 오류");
 			e.printStackTrace();
-		} finally {
+		}finally {
 			try {
 				conn.close();
 			} catch(SQLException e) {}
 		}
 		
 		super.forward(req, resp, "/WEB-INF/views/order/dorders.jsp");
+		
 	}
 
 }

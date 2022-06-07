@@ -38,10 +38,11 @@ public class OrderServlet extends MyServlet {
 		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
 		
-		int shop_code = Integer.parseInt(req.getParameter("shop_code"));
-		int item_code = Integer.parseInt(req.getParameter("item_code"));
+		String account_id = (String)session.getAttribute("account_id");
+		//int shop_code = Integer.parseInt(req.getParameter("shop_code"));
+		int itemcode = Integer.parseInt(req.getParameter("item_code"));
 		int orders_amount = Integer.parseInt(req.getParameter("orders_amount"));
-		int orders_camount = orders_amount;
+		int orders_camount = 0;
 		
 		try {
 			String orderCode = "SELECT MAX(ORDERS_CODE) AS MAXCODE FROM ORDERS";
@@ -50,19 +51,19 @@ public class OrderServlet extends MyServlet {
 			rs.next();
 			int ordercode = rs.getInt("MAXCODE") + 1;
 			
-			String shopCode = "SELECT SHOP_CODE AS SHOPCODE FROM SHOP WHERE SHOP_CODE=?";
+			String shopCode = "SELECT SHOP_CODE AS SHOPCODE FROM SHOP WHERE ACCOUNT_ID=?";
 			ps = conn.prepareStatement(shopCode);
-			ps.setInt(1, shop_code);
+			ps.setString(1, account_id);
 			rs = ps.executeQuery();
 			rs.next();
 			int shopcode = rs.getInt("SHOPCODE");
 			
-			String itemCode = "SELECT ITEM_CODE AS ITEMCODE FROM ITEM WHERE ITEM_CODE=?";
+			/*String itemCode = "SELECT ITEM_CODE AS ITEMCODE FROM ITEM WHERE ITEM_CODE=?";
 			ps = conn.prepareStatement(itemCode);
 			ps.setInt(1, item_code);
 			rs = ps.executeQuery();
 			rs.next();
-			int itemcode = rs.getInt("ITEMCODE");
+			int itemcode = rs.getInt("ITEMCODE");*/
 			
 			String SQL = "INSERT INTO ORDERS(ORDERS_CODE,SHOP_CODE,ITEM_CODE,ORDERS_AMOUNT,ORDERS_CAMOUNT,ORDERS_DATE) "
 					+ "VALUES(?, ?, ?, ?, ?, SYSDATE)";
@@ -74,14 +75,13 @@ public class OrderServlet extends MyServlet {
 			ps.setInt(5, orders_camount);
 			ps.executeUpdate();
 			
-			String sitemAmount = "SELECT SITEM_AMOUNT AS SITEMAMOUNT FROM SITEM WHERE SITEM_CODE=?";
+			/*String sitemAmount = "SELECT SITEM_AMOUNT AS SITEMAMOUNT FROM SITEM WHERE SITEM_CODE=?";
 			ps = conn.prepareStatement(sitemAmount);
 			ps.setInt(1, itemcode);
 			rs = ps.executeQuery();
 			rs.next();
 			int sitemamount = rs.getInt("SITEMAMOUNT");
 			int amountresult = sitemamount - orders_amount;
-			System.out.println(amountresult + "로 amount 바꾸기");
 			
 			if(amountresult < 0) {
 				ordermsg = "주문수량이 재고량보다 많습니다.";
@@ -100,7 +100,7 @@ public class OrderServlet extends MyServlet {
 				
 				ordermsg = "주문이 완료되었습니다.";
 				req.setAttribute("ordermsg", ordermsg);
-			}
+			}*/
 			
 		} catch(SQLException e) {
 			System.out.println("DB 연결실패");

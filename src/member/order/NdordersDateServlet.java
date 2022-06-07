@@ -2,6 +2,7 @@ package member.order;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +20,9 @@ import shop.shopDTO.ShopDTO;
 import util.DBConnection;
 import util.MyServlet;
 
-@WebServlet("/d.orders")
-public class DordersServlet extends MyServlet {
+
+@WebServlet("/ndorders_date")
+public class NdordersDateServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -37,6 +39,9 @@ public class DordersServlet extends MyServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
+			Date start_date = Date.valueOf(req.getParameter("start_date"));
+			Date end_date = Date.valueOf(req.getParameter("end_date"));
+			
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, account_id);
 			
@@ -71,10 +76,12 @@ public class DordersServlet extends MyServlet {
 			List<OrdersDTO> orders = new ArrayList<>();
 			for(int i=0;i<shop.size();i++) {
 				String orderslist = "SELECT * FROM ORDERS "
-						+ "WHERE SHOP_CODE=? AND ORDERS_SORT=1 "
+						+ "WHERE SHOP_CODE=? AND ORDERS_SORT=0 AND ORDERS_DATE>=? AND ORDERS_DATE<=to_date(?)+1"
 						+ "ORDER BY ORDERS_CODE DESC";
 				ps = conn.prepareStatement(orderslist);
 				ps.setInt(1, shop.get(i).getShop_code());
+				ps.setDate(2, start_date);
+				ps.setDate(3, end_date);
 				rs = ps.executeQuery();
 				while(rs.next()) {
 					OrdersDTO ordersdto = new OrdersDTO();
@@ -87,7 +94,6 @@ public class DordersServlet extends MyServlet {
 					ordersdto.setOrders_sort(rs.getInt("orders_sort"));
 					orders.add(ordersdto);
 				}
-				
 			}
 			req.setAttribute("orderslist", orders);
 			
@@ -100,7 +106,7 @@ public class DordersServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "/WEB-INF/views/order/dorders.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/ndorders.jsp");
 	}
 
 }

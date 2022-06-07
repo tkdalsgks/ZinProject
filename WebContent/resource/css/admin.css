@@ -14,13 +14,16 @@
 	border-collapse: collapse;
 	margin-bottom : 100px;
 }
+
 .admintable th{
 	font-size : 20px;
 	border : 1px solid gray;
 }
+
 .admintable tr,td{
 	border : 1px solid gray;
 }
+
 .insertbtn{
 	display : block;
 	background-color : black;
@@ -33,9 +36,29 @@
 	float : right;
 	margin-right : 100px;
 }
+
 .insertbtn:hover{
 	cursor : pointer;
 }
+
 .notable{
 	text-align : center;
+}
+
+.searchimg{
+	margin-left : 10px;
+	width : 23px;
+	height : 23px;
+	display : inline-block;
+	margin-top :5px;
+}
+
+.searchimg_a:hover{
+	cursor : pointer;
+}
+
+.date_search{
+	display : block;
+	float : right;
+	margin-right : 200px;
 }

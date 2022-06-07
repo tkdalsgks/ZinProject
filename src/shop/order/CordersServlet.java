@@ -44,7 +44,7 @@ public class CordersServlet extends MyServlet {
 			rs.next();
 			int shop_code = rs.getInt("shop_code");
 			
-			String orderslist = "SELECT * FROM ORDERS WHERE SHOP_CODE=? AND ORDERS_AMOUNT!=ORDERS_CAMOUNT";
+			String orderslist = "SELECT * FROM ORDERS WHERE SHOP_CODE=? AND ORDERS_AMOUNT!=ORDERS_CAMOUNT ORDER BY ORDERS_CODE";
 			
 			List<OrdersDTO> orders = new ArrayList<>();
 			

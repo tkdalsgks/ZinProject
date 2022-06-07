@@ -45,7 +45,7 @@ public class ItemInfoServlet extends MyServlet {
 			rs.next();
 			int company_code = rs.getInt("company_code");
 			
-			String itemlist = "SELECT * FROM ITEM WHERE COMPANY_CODE=? ORDER BY ITEM_CODE";
+			String itemlist = "SELECT * FROM ITEM WHERE COMPANY_CODE=? ORDER BY ITEM_NAME";
 			ps = conn.prepareStatement(itemlist);
 			ps.setInt(1, company_code);
 			rs = ps.executeQuery();

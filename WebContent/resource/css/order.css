@@ -26,3 +26,44 @@
 .orderbtn:hover{
 	cursor : pointer;
 }
+
+.itemlist{
+	height : 36px;
+	width: 300px;
+	padding-left : 10px;
+	border: 1px solid #999;
+	border-radius: 0px;
+	background: url('../img/arrow.png') no-repeat 95% 50%;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin-left:10px;
+	margin-right:10px;
+	font-size : 18px;
+	background-color : #FFFFFF;
+	margin-top : 5px;
+	margin-bottom:10px;
+}
+.itemlist::-ms-expand{
+	display:none;
+}
+
+.input{
+	height:34px;
+	width : 300px;
+	margin-left:10px;
+	margin-right:10px;
+	font-size:18px;
+	margin-top : 10px;
+	margin-bottom:5px;
+}
+
+.totalpricehr{
+	margin-bottom : 10px;
+}
+
+.pricetitle, .price{
+	font-weight : 700;
+	font-size : 26px;
+}

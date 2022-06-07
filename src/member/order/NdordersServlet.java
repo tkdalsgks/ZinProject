@@ -54,7 +54,7 @@ public class NdordersServlet extends MyServlet {
 			int member_code = rs.getInt("member_code");
 			
 			
-			String shoplist = "SELECT * FROM SHOP WHERE COMPANY_CODE=? AND MEMBER_CODE=?";
+			String shoplist = "SELECT * FROM SHOP WHERE COMPANY_CODE=? AND MEMBER_CODE=? ORDER BY SHOP_CODE";
 			ps = conn.prepareStatement(shoplist);
 			ps.setInt(1, company_code);
 			ps.setInt(2, member_code);

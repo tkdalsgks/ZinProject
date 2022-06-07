@@ -2,6 +2,7 @@ package shop.order;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,8 +19,8 @@ import member.order.orderDTO.OrdersDTO;
 import util.DBConnection;
 import util.MyServlet;
 
-@WebServlet("/a.orders")
-public class AordersServlet extends MyServlet {
+@WebServlet("/oorders_date")
+public class OordersDateServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -32,9 +33,14 @@ public class AordersServlet extends MyServlet {
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		PreparedStatement ps1 = null;
+		ResultSet rs1 = null;
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
+			Date start_date = Date.valueOf(req.getParameter("start_date"));
+			Date end_date = Date.valueOf(req.getParameter("end_date"));
+			
 			String shopCode = "SELECT SHOP_CODE FROM SHOP WHERE ACCOUNT_ID=?";
 			
 			ps = conn.prepareStatement(shopCode);
@@ -44,12 +50,16 @@ public class AordersServlet extends MyServlet {
 			rs.next();
 			int shop_code = rs.getInt("shop_code");
 			
-			String orderslist = "SELECT * FROM ORDERS WHERE SHOP_CODE=? AND ORDERS_AMOUNT=ORDERS_CAMOUNT ORDER BY ORDERS_CODE";
+			String orderslist = "SELECT * FROM ORDERS WHERE SHOP_CODE=? AND ORDERS_DATE>=? AND ORDERS_DATE<=to_date(?)+1 "
+					+ "ORDER BY ORDERS_CODE DESC";
 			
 			List<OrdersDTO> orders = new ArrayList<>();
+			List<String> itemname = new ArrayList<>();
 			
 			ps = conn.prepareStatement(orderslist);
 			ps.setInt(1, shop_code);
+			ps.setDate(2,start_date);
+			ps.setDate(3, end_date);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				OrdersDTO ordersdto = new OrdersDTO();
@@ -61,9 +71,19 @@ public class AordersServlet extends MyServlet {
 				ordersdto.setOrders_date(rs.getDate("orders_date"));
 				ordersdto.setOrders_sort(rs.getInt("orders_sort"));
 				orders.add(ordersdto);
+				
+				String itemName = "SELECT ITEM_NAME FROM ITEM WHERE ITEM_CODE=?";
+				ps1 = conn.prepareStatement(itemName);
+				ps1.setInt(1,ordersdto.getItem_code());
+				
+				rs1 = ps1.executeQuery();
+				rs1.next();
+				String item_name = rs1.getString("item_name");
+				itemname.add(item_name);
+				
 			}
 			req.setAttribute("orderslist", orders);
-			
+			req.setAttribute("itemname", itemname);
 		} catch(SQLException e) {
 			System.out.println("DB 접속 오류거나 SQL 문장 오류");
 			e.printStackTrace();
@@ -73,7 +93,7 @@ public class AordersServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		super.forward(req, resp, "/WEB-INF/views/order/aorders.jsp");
+		super.forward(req, resp, "/WEB-INF/views/order/oorders.jsp");
 	}
 
 }

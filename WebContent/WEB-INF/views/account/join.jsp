@@ -15,12 +15,19 @@
 <script type="text/javascript" >
 window.onload = function(){
 	
+	var msg = "<%=request.getAttribute("msg")%>";
+	if(msg != '' && msg != "undefined" && msg != "null"){		
+		alert(msg);
+	}
+
+	
 	var forcompany = document.getElementById("forcompany");
 	var forshop = document.getElementById("forshop");
 	forcompany.style.display = "none";
 	forshop.style.display = "none";
 	document.getElementById("inputcompany").value = "0";
 	document.getElementById("inputteam").value = "0";
+	document.getElementById("inputmember").value = "0";
 	document.getElementById("inputname").value = "none";
 	document.getElementById("inputshop").value = "0";
 }
@@ -32,6 +39,7 @@ function typeChange(param){
 		forshop.style.display = "none";
 		document.getElementById("inputcompany").value = "";
 		document.getElementById("inputteam").value = "";
+		document.getElementById("inputmember").value = "";
 		document.getElementById("inputname").value = "";
 		document.getElementById("inputshop").value = "0";
 	}else{
@@ -40,6 +48,7 @@ function typeChange(param){
 		document.getElementById("inputshop").value = "";
 		document.getElementById("inputcompany").value = "0";
 		document.getElementById("inputteam").value = "0";
+		document.getElementById("inputmember").value = "0";
 		document.getElementById("inputname").value = "none";
 	}
 }
@@ -66,9 +75,11 @@ function idcheck(){
 					if(msg == "false"){
 						alert("이미 사용중인 아이디입니다.");
 						$("#account_id").val("");
+						document.getElementById("checkedid").value = "false";
 						checked = false;
 					}else if(msg == "true"){
 						alert("사용가능한 아이디입니다.");
+						document.getElementById("checkedid").value = "true";
 						checked = true;
 					}
 				}
@@ -79,6 +90,19 @@ function idcheck(){
 	//alert(checked);
 	return checked;
 }
+
+function finishidcheck(){
+	var result = true;
+	var checked = document.getElementById("checkedid").value;
+	//alert(checked);
+	if(checked == "false"){
+		result = false;
+		alert("아이디 중복여부를 확인해주세요.");
+	}
+	
+	return result;
+}
+
 </script>
 
 
@@ -86,7 +110,7 @@ function idcheck(){
 </head>
 <body>
 
-<form action="join" method="post" onsubmit="return idcheck();">
+<form action="join" method="post" onsubmit="return finishidcheck();">
 	<table class='signupform' style="text-align: center;">
 		<tr>
 			<th class='title' colspan="2">회원가입</th>
@@ -119,6 +143,10 @@ function idcheck(){
 			<tr>
 				<td class='inputtitle'>팀코드</td>
 				<td><input class='input' id="inputteam" type="number" name="team_code" required></td>
+			</tr>
+			<tr>
+				<td class='inputtitle'>사원번호</td>
+				<td><input class='input' id="inputmember" type="number" name="member_code" required></td>
 			</tr>
 			<tr>
 				<td class='inputtitle'>팀원명</td>

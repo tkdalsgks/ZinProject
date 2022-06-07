@@ -15,7 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-window.onload = function(){
+$(document).ready(function(){	
 	if($("#sessionid").val() != '' && $("#sessionid").val() != "undefined" && $("#sessionid").val() != null){ 
 		//alert("메뉴가져오기");
 		//alert($("#sessionid").val());
@@ -41,9 +41,8 @@ window.onload = function(){
 			}
 		)
 	}
-	
-	
-}
+});
+
 
 function bottommenu(index,length){
 	$.ajax(

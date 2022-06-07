@@ -1,9 +1,8 @@
-package menu;
+package shop.order;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,54 +19,38 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import menu.menuDTO.MenuDTO;
+import shop.item.itemDTO.ItemDTO;
 import util.DBConnection;
 import util.MyServlet;
 
-/**
- * Servlet implementation class Bottommenu
- */
-@WebServlet("/bottommenu")
-public class BottommenuServlet extends MyServlet {
+@WebServlet("/orderprice")
+public class OrderPrice extends MyServlet {
 	private static final long serialVersionUID = 1L;
-
+    
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection conn = DBConnection.getConnection();
 		
 		resp.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = resp.getWriter();
-		String menu_top = req.getParameter("menu_top");
 		
-		String SQL = "SELECT * FROM TMPMENU WHERE MENU_TOP=? ORDER BY MENU_CODE";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
+		String item_code = req.getParameter("item_code");
+		//System.out.println(item_code);
 		
 		try {
-			ps = conn.prepareStatement(SQL);
-			ps.setInt(1, Integer.parseInt(menu_top));
 			
+			String ItemPrice = "SELECT ITEM_PRICE FROM ITEM WHERE ITEM_CODE=?";
+			
+			ps = conn.prepareStatement(ItemPrice);
+			ps.setInt(1, Integer.parseInt(item_code));
 			rs = ps.executeQuery();
-			
-			List<MenuDTO> menu = new ArrayList<>();
-			
-			while(rs.next()) {
-				MenuDTO dto = new MenuDTO();
-				dto.setCompany_code(rs.getInt("company_code"));
-				dto.setMenu_code(rs.getInt("menu_code"));
-				dto.setMenu_name(rs.getString("menu_name"));
-				dto.setMenu_top(rs.getInt("menu_top"));
-				dto.setMenu_access(rs.getString("menu_access"));
-				dto.setMenu_url(rs.getString("menu_url"));
-				menu.add(dto);
-			}
-			
-			Gson gson= new Gson();
-			String value = gson.toJson(menu);
-			//System.out.println(menu_top +"번째 메뉴 mouseover");
-			//System.out.println(value);
-			out.print(value);
+			rs.next();
+			int item_price = rs.getInt("ITEM_PRICE");
+			//System.out.println(item_price);
+			out.print(item_price);
 			
 			
 			

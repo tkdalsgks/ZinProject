@@ -19,13 +19,12 @@
 	if(list.size() != 0){
 %>
 <table class='admintable'>
-	<tr><th>매장내 물품코드</th><th>물품코드</th><th>수량</th></tr>
+	<tr><th>물품명</th><th>수량</th></tr>
 	<%
 		for(SitemDTO dto:list){
 	%>
 		<tr>
-			<td><%=dto.getSitem_code() %></td>
-			<td><%=dto.getItem_code() %></td>
+			<td><%=dto.getItem_name() %></td>
 			<td><%=dto.getSitem_amount() %></td>
 		</tr>
 	<%

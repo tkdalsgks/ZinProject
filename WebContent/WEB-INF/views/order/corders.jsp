@@ -15,6 +15,7 @@
 	<h1 class='pagetitle'>취소된 주문내역 페이지입니다.</h1>
 	<%
 		List<OrdersDTO> list = (List<OrdersDTO>)request.getAttribute("orderslist");
+		List<String> itemname = (List<String>)request.getAttribute("itemname");
 		if(list.size() != 0){
 	%>
 	<table class='admintable'>

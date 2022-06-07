@@ -44,6 +44,7 @@ public class JoinServlet extends MyServlet {
 		String type= req.getParameter("type");
 		String company_code = req.getParameter("company_code");
 		String team_code = req.getParameter("team_code");
+		String member_code = req.getParameter("member_code");
 		String member_name = req.getParameter("member_name");
 		String shop_code = req.getParameter("shop_code");
 		try {
@@ -62,39 +63,56 @@ public class JoinServlet extends MyServlet {
 					super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
 					
 				}else {
-					String companyCode = "SELECT COMPANY_CODE FROM SHOP WHERE SHOP_CODE=?";
-					ps2 = conn.prepareStatement(companyCode);
-					ps2.setInt(1, Integer.parseInt(shop_code));
-					rs2 = ps2.executeQuery();
-					rs2.next();
-					int company_c = rs2.getInt("company_code");
 					
-					String accountInsert = "INSERT INTO ACCOUNT(ACCOUNT_ID,ACCOUNT_PWD,COMPANY_CODE) VALUES(?,?,?)";
-					ps2 = conn.prepareStatement(accountInsert);
-					ps2.setString(1, account_id);
-					ps2.setString(2, account_pwd);
-					ps2.setInt(3, company_c);
-					ps2.executeUpdate();
+					String existsAccount = "SELECT ACCOUNT_ID FROM SHOP WHERE SHOP_CODE=?";
+					ps1 = conn.prepareStatement(existsAccount);
+					ps1.setInt(1, Integer.parseInt(shop_code));
+					rs1 = ps1.executeQuery();
+					rs1.next();
+					String currentId = rs1.getString("account_id");
+					if(currentId != null) {
+						String msg = "이미 가입된 점포입니다.";
+						//System.out.println(msg);
+						req.setAttribute("msg", msg);
+						super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
+					}else {
 					
-					String shopUpdate = "UPDATE SHOP SET ACCOUNT_ID=? WHERE SHOP_CODE=?";
-					ps2 = conn.prepareStatement(shopUpdate);
-					ps2.setString(1, account_id);
-					ps2.setInt(2, Integer.parseInt(shop_code));
-					ps2.executeUpdate();
-					
-					String cPath = req.getContextPath();
-					resp.sendRedirect(cPath + "/login");
+						String companyCode = "SELECT COMPANY_CODE FROM SHOP WHERE SHOP_CODE=?";
+						ps2 = conn.prepareStatement(companyCode);
+						ps2.setInt(1, Integer.parseInt(shop_code));
+						rs2 = ps2.executeQuery();
+						rs2.next();
+						int company_c = rs2.getInt("company_code");
+						
+						String accountInsert = "INSERT INTO ACCOUNT(ACCOUNT_ID,ACCOUNT_PWD,COMPANY_CODE) VALUES(?,?,?)";
+						ps2 = conn.prepareStatement(accountInsert);
+						ps2.setString(1, account_id);
+						ps2.setString(2, account_pwd);
+						ps2.setInt(3, company_c);
+						ps2.executeUpdate();
+						
+						String shopUpdate = "UPDATE SHOP SET ACCOUNT_ID=? WHERE SHOP_CODE=?";
+						ps2 = conn.prepareStatement(shopUpdate);
+						ps2.setString(1, account_id);
+						ps2.setInt(2, Integer.parseInt(shop_code));
+						ps2.executeUpdate();
+						
+						String cPath = req.getContextPath();
+						resp.sendRedirect(cPath + "/login");
+						
+					}
 				}
 				
 				
 			}else {  // 본사직원 회원가입
 				
 				
-				String isMember = "SELECT COUNT(*) AS CNT FROM COMPANY C, TEAM T "
-						+ "WHERE C.COMPANY_CODE=? AND C.COMPANY_CODE=T.COMPANY_CODE AND T.TEAM_CODE=?";
+				String isMember = "SELECT COUNT(*) AS CNT FROM COMPANY C, TEAM T, MEMBER M"
+						+ "WHERE C.COMPANY_CODE=? AND C.COMPANY_CODE=T.COMPANY_CODE AND T.TEAM_CODE=? AND M.TEAM_CODE=T.TEAM_CODE AND M.MEMBER_CODE=?";
 				ps1 = conn.prepareStatement(isMember);
 				ps1.setInt(1, Integer.parseInt(company_code));
 				ps1.setInt(2, Integer.parseInt(team_code));
+				ps1.setInt(3, Integer.parseInt(member_code));
 				rs1 = ps1.executeQuery();
 				rs1.next();
 				if(rs1.getInt("CNT")==0) { // 본사 직원이 아닐경우,
@@ -106,36 +124,51 @@ public class JoinServlet extends MyServlet {
 					super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
 					
 				}else {
-					String accountInsert = "INSERT INTO ACCOUNT(ACCONT_ID,ACCOUNT_PWD,COMPANY_CODE) VALUES(?,?,?)";
-					ps2 = conn.prepareStatement(accountInsert);
-					ps2.setString(1, account_id);
-					ps2.setString(2, account_pwd);
-					ps2.setInt(3, Integer.parseInt(company_code));
-					ps2.executeUpdate();
 					
-					String memberCode = "SELECT MAX(MEMBER_CODE) AS MAXCODE FROM MEMBER";
-					ps2 = conn.prepareStatement(memberCode);
-					rs2 = ps2.executeQuery();
-					rs2.next();
-					int code = rs2.getInt("MAXCODE") + 1;
+					String existsAccount = "SELECT ACCOUNT_ID FROM MEMBER WHERE MEMBER_CODE=?";
+					ps1 = conn.prepareStatement(existsAccount);
+					ps1.setInt(1, Integer.parseInt(member_code));
+					rs1 = ps1.executeQuery();
+					rs1.next();
+					String currentId = rs1.getString("account_id");
+					if(currentId != null) {
+						String msg = "이미 가입된 직원입니다.";
+						//System.out.println(msg);
+						req.setAttribute("msg", msg);
+						super.forward(req, resp, "/WEB-INF/views/account/join.jsp");
+					}else {
+						
+						String accountInsert = "INSERT INTO ACCOUNT(ACCONT_ID,ACCOUNT_PWD,COMPANY_CODE) VALUES(?,?,?)";
+						ps2 = conn.prepareStatement(accountInsert);
+						ps2.setString(1, account_id);
+						ps2.setString(2, account_pwd);
+						ps2.setInt(3, Integer.parseInt(company_code));
+						ps2.executeUpdate();
+						
+						/*String memberCode = "SELECT MAX(MEMBER_CODE) AS MAXCODE FROM MEMBER";
+						ps2 = conn.prepareStatement(memberCode);
+						rs2 = ps2.executeQuery();
+						rs2.next();
+						int code = rs2.getInt("MAXCODE") + 1;*/
+							
+							/*String teamCode = "SELECT TEAM_CODE FROM TEAM WHERE TEAM_NAME=?";
+						ps2 = conn.prepareStatement(teamCode);
+						ps2.setString(1, team_name);
+						rs2 = ps2.executeQuery();
+						rs2.next();
+						int teamcode = rs2.getInt("TEAM_CODE");*/
+						
+						//UPDATE SHOP SET ACCOUNT_ID=? WHERE SHOP_CODE=?
+						String memberInsert = "UPDATE MEMBER SET ACCOUNT_ID=? WHERE MEMBER_CODE=?";
+						ps2 = conn.prepareStatement(memberInsert);
+						ps2.setString(1, account_id);
+						ps2.setInt(2, Integer.parseInt(member_code));
+						ps2.executeUpdate();
+						
+						String cPath = req.getContextPath();
+						resp.sendRedirect(cPath + "/login");
+					}
 					
-					/*String teamCode = "SELECT TEAM_CODE FROM TEAM WHERE TEAM_NAME=?";
-					ps2 = conn.prepareStatement(teamCode);
-					ps2.setString(1, team_name);
-					rs2 = ps2.executeQuery();
-					rs2.next();
-					int teamcode = rs2.getInt("TEAM_CODE");*/
-					
-					String memberInsert = "INSERT INTO MEMBER(MEMBER_CODE,TEAM_CODE,MEMBER_NAME,ACCOUNT_ID) VALUES(?,?,?,?)";
-					ps2 = conn.prepareStatement(memberInsert);
-					ps2.setInt(1, code);
-					ps2.setInt(2, Integer.parseInt(team_code));
-					ps2.setString(3, member_name);
-					ps2.setString(4, account_id);
-					ps2.executeUpdate();
-					
-					String cPath = req.getContextPath();
-					resp.sendRedirect(cPath + "/login");
 				}
 				
 			}
