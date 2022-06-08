@@ -27,17 +27,21 @@
 <h1 class='pagetitle'>매출등록 페이지입니다.</h1>
 <div style="display: flex; width: 1400px; margin: 0 auto; text-align: center;">
 	<div class='sales_one'>
-		<table class='salestable'>
-			<tr><th>상품명</th><th>가격</th><th>재고량</th><th>등록수량</th></tr>
-			<c:forEach var="list" items="${itemlist }" varStatus="status">
-				<tr>
-					<td><c:out value="${list.item_name }" /></td>
-					<td><input type="text" class="sales_price" id="item_price${status.count}" value="${list.item_price }"></td>
-					<td><input type="text" class="sales_amount" value="${list.sitem_amount}"></td>
-					<td><input type="number" class="sales_number" id="item_amount${status.count}" min="0" max="${list.sitem_amount }" required></td>
-				</tr>
-			</c:forEach>
-		</table>
+		<form action="psales" method="post">
+			<table class='salestable'>
+				<tr><th></th><th>상품명</th><th>가격</th><th>재고량</th><th>등록수량</th><th></th></tr>
+				<c:forEach var="list" items="${itemlist}" varStatus="status">
+					<tr>
+						<td><input type="hidden" name="item_code${status.count}" value="${list.item_code}"></td>
+						<td><c:out value="${list.item_name}" /></td>
+						<td><input type="text" class="sales_price" id="item_price${status.count}" value="${list.item_price}"></td>
+						<td><input type="text" class="sales_amount" value="${list.sitem_amount}"></td>
+						<td><input type="number" class="sales_number" name="item_amount${status.count}" min="0" max="${list.sitem_amount}"></td>
+					</tr>
+				</c:forEach>
+			</table>
+			<button type="submit" id="item_input${status.count}" style="margin: 20px 0 20px 0; width: 100px; height: 30px;">담기</button>
+		</form>
 	</div>
 	<div class="sales_two">
 		<div>
@@ -63,7 +67,7 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	/* $(document).ready(function() {
 		for(let i = 1; i <= 100; i++) {
 			var total = 0;
 			var sum = 0;
@@ -75,7 +79,7 @@
 				$("#total_amount").val(sum);
 			})
 		}
-	})
+	}) */
 </script>
 
 </body>

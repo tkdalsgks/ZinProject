@@ -11,7 +11,7 @@
 	width: 1100px;
 	height: 350px;
 	margin-right: 30px;
-	overflow: scroll;
+	overflow: auto;
 }
 
 .sales_two {
@@ -37,7 +37,6 @@
 	margin-left: auto;
 	border: none;
 	border-collapse: collapse;
-	overflow: auto;
 }
 .salestable th {
 	font-size : 20px;
@@ -46,6 +45,15 @@
 }
 .salestable tr,td {
 	border : none;
+}
+
+.sales_item {
+	border: none;
+    text-align: center;
+    font-size: 15px;
+    outline: none;
+    color: transparent;
+	text-shadow: 0 0 0 black;
 }
 
 .sales_price,
