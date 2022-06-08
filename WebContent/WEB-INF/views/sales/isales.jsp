@@ -38,7 +38,7 @@
 				<c:forEach var="list" items="${itemlist}" varStatus="status">
 					<tr>
 						<form action="psales" method="post">
-							<td><input type="hidden" name="item_code" value="${list.item_code}"></td>
+							<td><input type="hidden" name="sitem_code" value="${list.sitem_code}"></td>
 							<td><c:out value="${list.item_name}" /></td>
 							<td><input type="text" class="sales_price" id="item_price${status.count}" value="${list.item_price}"></td>
 							<td><input type="text" class="sales_amount" value="${list.sitem_amount}"></td>
@@ -64,38 +64,34 @@
 				</table>
 			</div>
 			<div style="border-bottom: 1px solid black; width: 200px; margin: 0 auto 15px auto;">
-				<span style="font-size: 20px;">총금액</span><br>
-				<span><%=sales_sum %></span>
-				<span><input type="text" class="total_amount" id="total_amount" readonly></span> 원
+				<span style="font-size: 20px;">총 금액</span><br>
+				<span class="money_comma" style="margin-top: 10px; font-size: 18px; font-weight: bold;">
+					<%=sales_sum %><span style="font-size: 18px;"> 원</span>
+				</span>
 			</div>
 			<div>
-				<button id="div_pay"><span style="font-size: 20px;">결제</span></button>
+				<button id="div_pay" style="margin-top: 10px;">
+					<span style="font-size: 20px;">결제</span>
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
 <div id="div_order" class="sales_three">
 	<div style="border: 1px solid black; width: 1400px; height: 250px; margin: 0 auto;">
-		<button>신용카드</button>
-		<button>현금</button>
-		<button>확인</button>
+			<button>신용카드</button>
+			<button>현금</button>
+		<form action="ppsales" method="post">
+			<button type="submit">확인</button>
+		</form>
 	</div>
 </div>
 
 <script type="text/javascript">
-	/* $(document).ready(function() {
-		for(let i = 1; i <= 100; i++) {
-			var total = 0;
-			var sum = 0;
-			$('#item_amount' + i).blur(function () {
-				$('#item_amount' + i).each(function() {
-					total = $('#item_price' + i).val() * $('#item_amount' + i).val();
-					sum += total;
-				});
-				$("#total_amount").val(sum);
-			})
-		}
-	}) */
+	/* 천단위 콤마 */
+	var money = $('.money_comma').text();
+	var moneycomma = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	$('.money_comma').text(moneycomma);
 </script>
 
 </body>

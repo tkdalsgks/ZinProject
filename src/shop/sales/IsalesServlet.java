@@ -1,7 +1,6 @@
 package shop.sales;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +43,7 @@ public class IsalesServlet extends MyServlet {
 			rs.next();
 			int shop_code = rs.getInt("shop_code");
 			
-			String itemlist = "SELECT I.ITEM_CODE,I.ITEM_NAME,I.ITEM_PRICE,S.SITEM_AMOUNT "
+			String itemlist = "SELECT S.SITEM_CODE,I.ITEM_CODE,I.ITEM_NAME,I.ITEM_PRICE,S.SITEM_AMOUNT "
 					+ "FROM ITEM I, SITEM S "
 					+ "WHERE SHOP_CODE=? AND I.ITEM_CODE=S.ITEM_CODE AND S.SITEM_AMOUNT!=0";
 			ps = conn.prepareStatement(itemlist);
@@ -54,6 +53,7 @@ public class IsalesServlet extends MyServlet {
 			while(rs.next()) {
 				ItemDTO dto = new ItemDTO();
 				dto.setItem_code(rs.getInt("item_code"));
+				dto.setSitem_code(rs.getInt("sitem_code"));
 				dto.setItem_name(rs.getString("item_name"));
 				dto.setItem_price(rs.getInt("item_price"));
 				dto.setSitem_amount(rs.getInt("sitem_amount"));
@@ -63,7 +63,7 @@ public class IsalesServlet extends MyServlet {
 			
 			String psaleslist = "SELECT I.ITEM_NAME,I.ITEM_PRICE,P.PSALES_AMOUNT "
 					+ "FROM ITEM I, PSALES P "
-					+ "WHERE ACCOUNT_ID=? AND P.ITEM_CODE=I.ITEM_CODE";
+					+ "WHERE ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
 			ps = conn.prepareStatement(psaleslist);
 			ps.setString(1, account_id);
 			rs = ps.executeQuery();
@@ -79,7 +79,7 @@ public class IsalesServlet extends MyServlet {
 			
 			String sales_sum = "SELECT NVL(SUM(I.ITEM_PRICE * P.PSALES_AMOUNT), 0) AS SALES_SUM "
 					+ "FROM ACCOUNT A, ITEM I, PSALES P "
-					+ "WHERE A.ACCOUNT_ID=? AND P.ITEM_CODE=I.ITEM_CODE";
+					+ "WHERE A.ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
 			ps = conn.prepareStatement(sales_sum);
 			ps.setString(1, account_id);
 			rs = ps.executeQuery();

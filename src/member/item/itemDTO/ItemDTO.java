@@ -9,6 +9,7 @@ public class ItemDTO {
 	int shop_code;
 	int item_sort;
 	int psales_amount;
+	int sitem_code;
 	
 	public ItemDTO() {}
 	
@@ -20,7 +21,7 @@ public class ItemDTO {
 		this.item_price = item_price;
 	}
 	
-	public ItemDTO(int item_code, int company_code, int shop_code, String item_name, int item_price, int sitem_amount) {
+	public ItemDTO(int item_code, int company_code, int shop_code, String item_name, int item_price, int sitem_amount, int sitem_code) {
 		super();
 		this.item_code = item_code;
 		this.company_code = company_code;
@@ -28,6 +29,7 @@ public class ItemDTO {
 		this.item_name = item_name;
 		this.item_price = item_price;
 		this.sitem_amount = sitem_amount;
+		this.sitem_code = sitem_code;
 	}
 	
 	public ItemDTO(String item_name, int item_price, int psales_amount) {
@@ -95,6 +97,14 @@ public class ItemDTO {
 
 	public void setPsales_amount(int psales_amount) {
 		this.psales_amount = psales_amount;
+	}
+
+	public int getSitem_code() {
+		return sitem_code;
+	}
+
+	public void setSitem_code(int sitem_code) {
+		this.sitem_code = sitem_code;
 	}
 	
 }
