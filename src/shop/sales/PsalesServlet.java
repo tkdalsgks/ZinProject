@@ -30,8 +30,8 @@ public class PsalesServlet extends MyServlet {
 		resp.setContentType("text/html;charset=UTF-8");
 		HttpSession session = req.getSession();
 		String account_id = (String)session.getAttribute("account_id");
-		int item_code = Integer.parseInt(req.getParameter("item_code1"));
-		int item_amount = Integer.parseInt(req.getParameter("item_amount1"));
+		int item_code = Integer.parseInt(req.getParameter("item_code"));
+		int item_amount = Integer.parseInt(req.getParameter("item_amount"));
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -46,15 +46,12 @@ public class PsalesServlet extends MyServlet {
 			
 			String psales = "INSERT INTO PSALES(PSALES_CODE,ITEM_CODE,PSALES_AMOUNT,ACCOUNT_ID) "
 					+ "VALUES(?, ?, ?, ?)";
-			while(true) {
-				ps = conn.prepareStatement(psales);
-				ps.setInt(1, psalescode);
-				ps.setInt(2, item_code);
-				ps.setInt(3, item_amount);
-				ps.setString(4, account_id);
-				ps.executeUpdate();
-			}
-			
+			ps = conn.prepareStatement(psales);
+			ps.setInt(1, psalescode);
+			ps.setInt(2, item_code);
+			ps.setInt(3, item_amount);
+			ps.setString(4, account_id);
+			ps.executeUpdate();
 			
 		} catch(SQLException e) {
 			System.out.println("DB 접속 오류거나 SQL 문장 오류");
