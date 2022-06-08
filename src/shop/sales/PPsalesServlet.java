@@ -44,16 +44,14 @@ public class PPsalesServlet extends MyServlet {
 			rs = ps.executeQuery();
 			rs.next();
 			int sitemcode = rs.getInt("SITEM_CODE");
-			System.out.println(sitemcode);
 			
-			String salesAmount = "SELECT SUM(PSALES_AMOUNT) AS PSALES_AMOUNT FROM PSALES";
+			String salesAmount = "SELECT SUM(SALES_AMOUNT) AS SALES_AMOUNT FROM PSALES";
 			ps = conn.prepareStatement(salesAmount);
 			rs = ps.executeQuery();
 			rs.next();
-			int salesamount = rs.getInt("PSALES_AMOUNT");
-			System.out.println(salesamount);
+			int salesamount = rs.getInt("SALES_AMOUNT");
 			
-			String salesPrice = "SELECT NVL(SUM(I.ITEM_PRICE * P.PSALES_AMOUNT), 0) AS SALES_SUM "
+			String salesPrice = "SELECT NVL(SUM(I.ITEM_PRICE * P.SALES_AMOUNT), 0) AS SALES_SUM "
 					+ "FROM ACCOUNT A, ITEM I, PSALES P "
 					+ "WHERE A.ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
 			ps = conn.prepareStatement(salesPrice);
@@ -61,7 +59,6 @@ public class PPsalesServlet extends MyServlet {
 			rs = ps.executeQuery();
 			rs.next();
 			int salesprice = rs.getInt("SALES_SUM");
-			System.out.println(salesprice);
 			
 			String psalesCode = "INSERT INTO SALES(SALES_CODE,SALES_NUMBER,SITEM_CODE,PAY_CODE,SALES_AMOUNT,SALES_PRICE,SALES_SORT,SALES_DATE) "
 					+ "VALUES(?, ?, ?, 1, ?, ?, 1, SYSDATE)";

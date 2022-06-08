@@ -58,7 +58,7 @@
 						<tr>
 							<td><c:out value="${list2.item_name}" /></td>
 							<td><c:out value="${list2.item_price}" /></td>
-							<td><c:out value="${list2.psales_amount}" /></td>
+							<td><c:out value="${list2.sales_amount}" /></td>
 						</tr>
 					</c:forEach>
 				</table>

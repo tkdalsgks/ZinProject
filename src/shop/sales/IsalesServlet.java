@@ -61,7 +61,7 @@ public class IsalesServlet extends MyServlet {
 			}
 			req.setAttribute("itemlist", item);
 			
-			String psaleslist = "SELECT I.ITEM_NAME,I.ITEM_PRICE,P.PSALES_AMOUNT "
+			String psaleslist = "SELECT I.ITEM_NAME,I.ITEM_PRICE,P.SALES_AMOUNT "
 					+ "FROM ITEM I, PSALES P "
 					+ "WHERE ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
 			ps = conn.prepareStatement(psaleslist);
@@ -72,12 +72,12 @@ public class IsalesServlet extends MyServlet {
 				ItemDTO dto = new ItemDTO();
 				dto.setItem_name(rs.getString("item_name"));
 				dto.setItem_price(rs.getInt("item_price"));
-				dto.setPsales_amount(rs.getInt("psales_amount"));
+				dto.setSales_amount(rs.getInt("sales_amount"));
 				psales.add(dto);
 			}
 			req.setAttribute("psaleslist", psales);
 			
-			String sales_sum = "SELECT NVL(SUM(I.ITEM_PRICE * P.PSALES_AMOUNT), 0) AS SALES_SUM "
+			String sales_sum = "SELECT NVL(SUM(I.ITEM_PRICE * P.SALES_AMOUNT), 0) AS SALES_SUM "
 					+ "FROM ACCOUNT A, ITEM I, PSALES P "
 					+ "WHERE A.ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
 			ps = conn.prepareStatement(sales_sum);

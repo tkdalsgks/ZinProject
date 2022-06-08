@@ -40,13 +40,14 @@ public class PsalesServlet extends MyServlet {
 			rs.next();
 			int psalescode = rs.getInt("MAXCODE") + 1;
 			
-			String psales = "INSERT INTO PSALES(PSALES_CODE,SITEM_CODE,PSALES_AMOUNT,ACCOUNT_ID) "
-					+ "VALUES(?, ?, ?, ?)";
+			String psales = "INSERT INTO PSALES(PSALES_CODE,SITEM_CODE,SALES_AMOUNT,SALES_PRICE,ACCOUNT_ID) "
+					+ "VALUES(?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(psales);
 			ps.setInt(1, psalescode);
 			ps.setInt(2, sitem_code);
 			ps.setInt(3, item_amount);
-			ps.setString(4, account_id);
+			ps.setInt(4, 1);
+			ps.setString(5, account_id);
 			ps.executeUpdate();
 			
 		} catch(SQLException e) {
