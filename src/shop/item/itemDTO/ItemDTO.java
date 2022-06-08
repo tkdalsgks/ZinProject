@@ -5,6 +5,7 @@ public class ItemDTO {
 	int company_code;
 	String item_name;
 	int item_price;
+	int item_sort;
 	
 	public ItemDTO() {}
 	
@@ -16,6 +17,16 @@ public class ItemDTO {
 		this.item_price = item_price;
 	}
 	
+	
+	
+	public int getItem_sort() {
+		return item_sort;
+	}
+
+	public void setItem_sort(int item_sort) {
+		this.item_sort = item_sort;
+	}
+
 	public int getItem_code() {
 		return item_code;
 	}

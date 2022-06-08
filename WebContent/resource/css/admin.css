@@ -18,10 +18,14 @@
 .admintable th{
 	font-size : 20px;
 	border : 1px solid gray;
+	padding-top : 5px;
+	padding-bottom : 5px;
 }
 
 .admintable tr,td{
 	border : 1px solid gray;
+	padding-top : 5px;
+	padding-bottom : 5px;
 }
 
 .insertbtn{
@@ -61,4 +65,8 @@
 	display : block;
 	float : right;
 	margin-right : 200px;
+}
+
+.notsell{
+	text-decoration : line-through;
 }

@@ -108,16 +108,18 @@ public class JoinServlet extends MyServlet {
 				
 				
 				String isMember = "SELECT COUNT(*) AS CNT FROM COMPANY C, TEAM T, MEMBER M"
-						+ "WHERE C.COMPANY_CODE=? AND C.COMPANY_CODE=T.COMPANY_CODE AND T.TEAM_CODE=? AND M.TEAM_CODE=T.TEAM_CODE AND M.MEMBER_CODE=?";
+						+ "WHERE C.COMPANY_CODE=? AND C.COMPANY_CODE=T.COMPANY_CODE AND T.TEAM_CODE=? AND M.TEAM_CODE=T.TEAM_CODE AND M.MEMBER_CODE=?"
+						+ "AND M.MEMBER_NAME=?";
 				ps1 = conn.prepareStatement(isMember);
 				ps1.setInt(1, Integer.parseInt(company_code));
 				ps1.setInt(2, Integer.parseInt(team_code));
 				ps1.setInt(3, Integer.parseInt(member_code));
+				ps1.setString(4, member_name);
 				rs1 = ps1.executeQuery();
 				rs1.next();
 				if(rs1.getInt("CNT")==0) { // 본사 직원이 아닐경우,
 					
-					String errormsg = "일치하는 본사 정보가 없습니다.";
+					String errormsg = "일치하는 본사직원 정보가 없습니다.";
 					
 					session.setAttribute("errormsg", errormsg);
 					

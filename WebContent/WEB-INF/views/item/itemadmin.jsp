@@ -32,15 +32,27 @@ $(document).ready(function(){
 	<%
 		List<ItemDTO> list = (List<ItemDTO>)request.getAttribute("itemlist");
 		for(ItemDTO dto:list){
+			if(dto.getItem_sort() == 1){
 	%>
-		<tr>
-			<td><%=dto.getItem_code() %></td>
-			<td><%=dto.getItem_name() %></td>
-			<td><%=dto.getItem_price() %></td>
-			<td><a href='${pageContext.request.contextPath}/itemmod?code=<%=dto.getItem_code()%>'>수정</a></td>
-			<td><a href='${pageContext.request.contextPath}/itemdelete?code=<%=dto.getItem_code()%>'>삭제</a></td>
-		</tr>
+			<tr class='notsell'>
+				<td><%=dto.getItem_code() %></td>
+				<td><%=dto.getItem_name() %> (판매중지)</td>
+				<td><%=dto.getItem_price() %></td>
+				<td> - </td>
+				<td> - </td>
+			</tr>
+	<% 
+			}else{
+	%>
+			<tr>
+				<td><%=dto.getItem_code() %></td>
+				<td><%=dto.getItem_name() %></td>
+				<td><%=dto.getItem_price() %></td>
+				<td><a href='${pageContext.request.contextPath}/itemmod?code=<%=dto.getItem_code()%>'>수정</a></td>
+				<td><a href='${pageContext.request.contextPath}/itemdelete?code=<%=dto.getItem_code()%>'>주문중단</a></td>
+			</tr>
 	<%
+			}
 		}
 	%>
 </table>

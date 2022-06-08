@@ -26,7 +26,7 @@ public class DeleteServlet extends MyServlet {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection conn = DBConnection.getConnection();
 		
-		String SQL = "DELEFT FROM ACCOUNT WHERE ACCOUNT_ID=?";
+		String SQL = "DELETE FROM ACCOUNT WHERE ACCOUNT_ID=?";
 		PreparedStatement ps = null;
 		int delete = 0;
 		HttpSession session = req.getSession();
@@ -40,7 +40,7 @@ public class DeleteServlet extends MyServlet {
 			delete = ps.executeUpdate();
 			
 			session.invalidate();
-			super.forward(req, resp, "/WEB-INF/views/index.jsp");
+			super.forward(req, resp, "/WEB-INF/index.jsp");
 			
 		} catch(SQLException e) {
 			System.out.println("DB 접속 오류거나 SQL 문장 오류");

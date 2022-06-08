@@ -23,12 +23,21 @@
 	<%
 		List<ItemDTO> list = (List<ItemDTO>)request.getAttribute("itemlist");
 		for(ItemDTO dto:list){
+			if(dto.getItem_sort() == 1){
 	%>
-		<tr>
-			<td><%=dto.getItem_name() %></td>
-			<td><%=dto.getItem_price() %></td>
-		</tr>
+			<tr class='notsell'>
+				<td><%=dto.getItem_name() %> (판매중지)</td>
+				<td><%=dto.getItem_price() %></td>
+			</tr>
 	<%
+			}else{
+	%>
+			<tr>
+				<td><%=dto.getItem_name() %></td>
+				<td><%=dto.getItem_price() %></td>
+			</tr>
+	<%
+			}
 		}
 	%>
 </table>

@@ -57,7 +57,7 @@ function idChange(){
 	document.getElementById("checkedid").value = "false";
 }
 
-function idcheck(){
+function idCheck(){
 	var checked = true;
 	var account_id = $("#account_id").val();
 	if(account_id == ""){
@@ -118,15 +118,15 @@ function finishidcheck(){
 		<tr>
 			<td class='inputtitle'>아이디</td>
 			<td>
-				<input class='input' id="account_id" type="text" name="account_id" onchange="idChange()" required>
-				<input id='idchkbtn' type="button" value="아이디 중복 확인" onclick="idcheck()">
+				<input class='inputid' id="account_id" type="text" name="account_id" maxlength=15 pattern="[A-Za-z0-9]+" placeholder="15자 이내의 영문 또는 숫자" onchange="idChange()" required>
+				<input id='idchkbtn' type="button" value="아이디 중복 확인" onclick="idCheck()">
 				<input type="hidden" id="checkedid" value="false">
 			</td>
 			
 		</tr>
 		<tr>
 			<td class='inputtitle'>비밀번호</td>
-			<td><input class='input' type="password" name="account_pwd" required></td>
+			<td><input class='input' type="password" name="account_pwd" maxlength=20 pattern="[A-Za-z0-9]+" placeholder="20자 이내의 영문 또는 숫자" required></td>
 		</tr>
 		<tr>
 			<td class='inputtitle'>소속</td>

@@ -46,7 +46,7 @@ public class ItemAdminServlet extends MyServlet {
 			rs.next();
 			int company_code = rs.getInt("company_code");
 			
-			String itemlist = "SELECT * FROM ITEM WHERE COMPANY_CODE=? ORDER BY ITEM_CODE";
+			String itemlist = "SELECT * FROM ITEM WHERE COMPANY_CODE=? ORDER BY ITEM_SORT,ITEM_CODE";
 			ps = conn.prepareStatement(itemlist);
 			ps.setInt(1, company_code);
 			rs = ps.executeQuery();
@@ -57,6 +57,7 @@ public class ItemAdminServlet extends MyServlet {
 				dto.setItem_code(rs.getInt("item_code"));
 				dto.setItem_name(rs.getString("item_name"));
 				dto.setItem_price(rs.getInt("item_price"));
+				dto.setItem_sort(rs.getInt("item_sort"));
 				item.add(dto);
 			}
 			

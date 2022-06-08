@@ -14,7 +14,7 @@
 
 <table class='inserttable'>
 	<form action="shopinsert" method="post">
-	<tr><td class='insertname'>점포명</td><td><input type="text" name="shop_name" class="insertinput" id="shop_name" required></td></tr>
+	<tr><td class='insertname'>점포명</td><td><input type="text" name="shop_name" class="insertinput" id="shop_name" maxlength=20 required></td></tr>
 	<tr><td class='insertname'>관리자명</td><td class='insertcontext'><%=request.getAttribute("member_name") %></td></tr>
 	<tr><td colspan='2'><input type="submit" class='insertbtn' value="등록하기" id="insert_btn"></td></tr>
 	</form>

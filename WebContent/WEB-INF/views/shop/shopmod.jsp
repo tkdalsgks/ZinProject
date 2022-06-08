@@ -15,7 +15,7 @@
 <table class='inserttable'>
 	<form action="shopmod" method="post">
 	<input name="shop_code" type="hidden" id="shop_code" value="<%=request.getAttribute("shop_code")%>">
-	<tr><td class='insertname'>점포명</td><td><input type="text" name="shop_name" class="insertinput" id="shop_name" value="<%=request.getAttribute("shop_name")%>" required></td></tr>
+	<tr><td class='insertname'>점포명</td><td><input type="text" name="shop_name" class="insertinput" id="shop_name" value="<%=request.getAttribute("shop_name")%>" maxlength=20 required></td></tr>
 	<tr><td class='insertname'>관리자명</td><td class='insertcontext'><%=request.getAttribute("member_name") %></td></tr>
 	<tr><td colspan='2'><input type="submit" class='insertbtn' value="수정하기" id="mod_btn"></td></tr>
 	</form>

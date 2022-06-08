@@ -7,6 +7,7 @@ public class ItemDTO {
 	int item_price;
 	int sitem_amount;
 	int shop_code;
+	int item_sort;
 	
 	public ItemDTO() {}
 	
@@ -28,6 +29,16 @@ public class ItemDTO {
 		this.sitem_amount = sitem_amount;
 	}
 	
+	
+	
+	public int getItem_sort() {
+		return item_sort;
+	}
+
+	public void setItem_sort(int item_sort) {
+		this.item_sort = item_sort;
+	}
+
 	public int getItem_code() {
 		return item_code;
 	}
