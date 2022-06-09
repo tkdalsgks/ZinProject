@@ -70,7 +70,7 @@
 	<div class="sales_two">
 		<div>
 			<div style="border-bottom: 1px solid black; width: 200px; margin: 0 auto 15px auto;">
-				<table>
+				<table style="width: 100%;">
 					<tr><th>상품명</th><th>가격</th><th>수량</th></tr>
 					<c:forEach var="list2" items="${psaleslist}">
 						<tr>

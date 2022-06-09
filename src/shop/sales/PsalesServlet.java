@@ -40,15 +40,32 @@ public class PsalesServlet extends MyServlet {
 			rs.next();
 			int psalescode = rs.getInt("MAXCODE") + 1;
 			
-			String psales = "INSERT INTO PSALES(PSALES_CODE,SITEM_CODE,SALES_AMOUNT,SALES_PRICE,ACCOUNT_ID) "
-					+ "VALUES(?, ?, ?, ?, ?)";
-			ps = conn.prepareStatement(psales);
-			ps.setInt(1, psalescode);
+			String duplicate = "SELECT COUNT(*) AS CNT FROM PSALES WHERE ACCOUNT_ID=? AND SITEM_CODE=?";
+			ps = conn.prepareStatement(duplicate);
+			ps.setString(1, account_id);
 			ps.setInt(2, sitem_code);
-			ps.setInt(3, item_amount);
-			ps.setInt(4, 1);
-			ps.setString(5, account_id);
-			ps.executeUpdate();
+			rs = ps.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("CNT");
+			
+			if(cnt >= 1) {
+				String update = "UPDATE PSALES SET SALES_AMOUNT=SALES_AMOUNT+? WHERE ACCOUNT_ID=? AND SITEM_CODE=?";
+				ps = conn.prepareStatement(update);
+				ps.setInt(1, item_amount);
+				ps.setString(2, account_id);
+				ps.setInt(3, sitem_code);
+				ps.executeUpdate();
+			} else {
+				String psales = "INSERT INTO PSALES(PSALES_CODE,SITEM_CODE,SALES_AMOUNT,SALES_PRICE,ACCOUNT_ID) "
+						+ "VALUES(?, ?, ?, ?, ?)";
+				ps = conn.prepareStatement(psales);
+				ps.setInt(1, psalescode);
+				ps.setInt(2, sitem_code);
+				ps.setInt(3, item_amount);
+				ps.setInt(4, 1);
+				ps.setString(5, account_id);
+				ps.executeUpdate();
+			}
 			
 			String deleteItem = "UPDATE SITEM SET SITEM_AMOUNT=SITEM_AMOUNT-? WHERE SITEM_CODE=?";
 			ps = conn.prepareStatement(deleteItem);
