@@ -18,14 +18,32 @@
 <%@ include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#div_order').css('display', 'none');
 		$('#div_pay').on('click', function() {
+			$.ajax({
+				type : "POST",
+				url :"paylist",
+				dataType : "json",
+				success : function(result){
+					//alert(result.length);
+					$("#pay_sort").empty();
+					for(var i=0;i<result.length;i++){
+						$("#pay_sort").append("<input type='button' value='"+result[i].pay_name+"' onclick='paysort("+result[i].pay_code+")'>");
+					}
+				}	
+			})
+			
+			
 			$('#div_order').css('display', '');
 		})
 	})
+	
+	function paysort(code){
+		$("#pay_code").val(code);
+	}
 </script>
 
 <input type="hidden" id="account_id" value="${account_id}">
@@ -42,7 +60,7 @@
 							<td><c:out value="${list.item_name}" /></td>
 							<td><input type="text" class="sales_price" id="item_price${status.count}" value="${list.item_price}"></td>
 							<td><input type="text" class="sales_amount" value="${list.sitem_amount}"></td>
-							<td><input type="number" class="sales_number" name="item_amount" min="0" max="${list.sitem_amount}"></td>
+							<td><input type="number" class="sales_number" name="item_amount" min="1" max="${list.sitem_amount}" required></td>
 							<td><button type="submit" id="item_input${status.count}" style="margin: 5px 0 5px 0; width: 80px; height: 30px;">담기</button></td>
 						</form>
 					</tr>
@@ -79,9 +97,11 @@
 </div>
 <div id="div_order" class="sales_three">
 	<div style="border: 1px solid black; width: 1400px; height: 250px; margin: 0 auto;">
-			<button>신용카드</button>
-			<button>현금</button>
 		<form action="ppsales" method="post">
+			<input type="hidden" name="pay_code" id="pay_code">
+			<div id="pay_sort">
+	
+			</div>
 			<button type="submit">확인</button>
 		</form>
 	</div>

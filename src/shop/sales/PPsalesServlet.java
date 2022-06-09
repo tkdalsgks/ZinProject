@@ -26,20 +26,52 @@ public class PPsalesServlet extends MyServlet {
 		resp.setContentType("text/html;charset=UTF-8");
 		HttpSession session = req.getSession();
 		String account_id = (String)session.getAttribute("account_id");
+		int pay_code = Integer.parseInt(req.getParameter("pay_code"));
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		PreparedStatement ps1 = null;
+		ResultSet rs1 = null;
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
-			String salesCode = "SELECT MAX(SALES_CODE) CODE, MAX(SALES_NUMBER) CODE2 FROM SALES";
+			String salesCode = "SELECT MAX(SALES_CODE) CODE0 FROM SALES";
 			ps = conn.prepareStatement(salesCode);
 			rs = ps.executeQuery();
 			rs.next();
-			int salescode = rs.getInt("CODE") + 1;
-			int salesnumber = rs.getInt("CODE2") + 1;
+			int salescode = rs.getInt("CODE0") + 1;
+			int salesnumber = 1;
 			
-			String sitemCode = "SELECT SITEM_CODE FROM SITEM";
+			String ppsalesList = "SELECT * FROM PSALES WHERE ACCOUNT_ID=?";
+			ps = conn.prepareStatement(ppsalesList);
+			ps.setString(1, account_id);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				int sitem_code = rs.getInt("SITEM_CODE");
+				int sales_amount = rs.getInt("SALES_AMOUNT");
+				
+				String priceInfo = "SELECT ITEM_PRICE FROM ITEM I,SITEM S WHERE I.ITEM_CODE=S.ITEM_CODE AND S.SITEM_CODE=?";
+				ps1 = conn.prepareStatement(priceInfo);
+				ps1.setInt(1, sitem_code);
+				rs1 = ps1.executeQuery();
+				rs1.next();
+				int item_price = rs1.getInt("ITEM_PRICE");
+				
+				String psalesCode = "INSERT INTO SALES(SALES_CODE,SALES_NUMBER,SITEM_CODE,PAY_CODE,SALES_AMOUNT,SALES_PRICE,SALES_SORT,SALES_DATE) "
+						+ "VALUES(?, ?, ?, ?, ?, ?, 1, SYSDATE)";
+				
+				ps1 = conn.prepareStatement(psalesCode);
+				ps1.setInt(1, salescode);
+				ps1.setInt(2, salesnumber++);
+				ps1.setInt(3, sitem_code);
+				ps1.setInt(4, pay_code);
+				ps1.setInt(5, sales_amount);
+				ps1.setInt(6, sales_amount * item_price);
+				ps1.executeUpdate();
+			}
+			
+			
+			/*String sitemCode = "SELECT SITEM_CODE FROM SITEM";
 			ps = conn.prepareStatement(sitemCode);
 			rs = ps.executeQuery();
 			rs.next();
@@ -70,7 +102,7 @@ public class PPsalesServlet extends MyServlet {
 			ps.setInt(3, sitemcode);
 			ps.setInt(4, salesamount);
 			ps.setInt(5, salesprice);
-			ps.executeUpdate();
+			ps.executeUpdate();*/
 			
 			String deleteCode = "DELETE FROM PSALES WHERE ACCOUNT_ID=?";
 			ps = conn.prepareStatement(deleteCode);

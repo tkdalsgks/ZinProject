@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -136,6 +138,21 @@ public class SalesServlet extends MyServlet {
 
 				}
 			}
+			
+			Collections.sort(saleslist,new Comparator<SalesDTO>() {
+				@Override
+				public int compare(SalesDTO dto1,SalesDTO dto2) {
+					if(dto1.getSales_code()<dto2.getSales_code()) {
+						return 1;
+					}else if(dto1.getSales_code()<dto1.getSales_code()) {
+						return -1;
+					}else if(dto1.getSales_number()>dto2.getSales_number()) {
+						return 1;
+					}else {
+						return -1;
+					}
+				}
+			});
 			
 			String payList = "SELECT * FROM PAY";
 			List<PayDTO> paylist= new ArrayList<>();

@@ -63,7 +63,7 @@ $(document).ready(function(){
 	<%
 			if(list.size() != 0){
 				for(SalesDTO dto:list){
-					if(dto.getSales_sort() != 1){
+					if(dto.getSales_sort() == 1){
 						sales_amount += dto.getSales_amount();
 						sales_price += dto.getSales_price();
 					}

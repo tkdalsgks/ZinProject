@@ -50,6 +50,12 @@ public class PsalesServlet extends MyServlet {
 			ps.setString(5, account_id);
 			ps.executeUpdate();
 			
+			String deleteItem = "UPDATE SITEM SET SITEM_AMOUNT=SITEM_AMOUNT-? WHERE SITEM_CODE=?";
+			ps = conn.prepareStatement(deleteItem);
+			ps.setInt(1, item_amount);
+			ps.setInt(2, sitem_code);
+			ps.executeUpdate();
+			
 		} catch(SQLException e) {
 			System.out.println("DB 접속 오류거나 SQL 문장 오류");
 			e.printStackTrace();

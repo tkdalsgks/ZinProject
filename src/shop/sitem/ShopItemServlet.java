@@ -50,7 +50,7 @@ public class ShopItemServlet extends MyServlet {
 			rs.next();
 			int shop_code = rs.getInt("shop_code");
 			
-			String itemlist = "SELECT * FROM SITEM WHERE SHOP_CODE=?";
+			String itemlist = "SELECT * FROM SITEM WHERE SHOP_CODE=? AND SITEM_AMOUNT != 0";
 			ps = conn.prepareStatement(itemlist);
 			ps.setInt(1, shop_code);
 			rs = ps.executeQuery();

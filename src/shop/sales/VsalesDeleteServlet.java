@@ -1,4 +1,4 @@
-package member.sales;
+package shop.sales;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import util.DBConnection;
 import util.MyServlet;
 
-@WebServlet("/salesdelete")
-public class SalesDeleteServlet extends MyServlet {
+@WebServlet("/vsalesdelete")
+public class VsalesDeleteServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -63,7 +63,7 @@ public class SalesDeleteServlet extends MyServlet {
 		}
 		
 		String cPath = req.getContextPath();
-		resp.sendRedirect(cPath + "/sales");
+		resp.sendRedirect(cPath + "/v.sales");
 	}
 
 }
