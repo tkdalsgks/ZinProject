@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.pagetitle{
+	margin-top : 80px;
+	text-align:center;
+}
+.searchshop{
+	margin-top : 50px;
+	width : 40%;
+	font-size : 30px;
+	margin-left : auto;
+	margin-right : auto;
+}
+.shoplist{
+	height : 36px;
+	width: 50%;
+	padding-left : 10px;
+	border: 1px solid #999;
+	border-radius: 0px;
+	background: url('../img/arrow.png') no-repeat 95% 50%;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin-left:10px;
+	margin-right:10px;
+	font-size : 18px;
+	background-color : #FFFFFF;
+	margin-top : 5px;
+	margin-bottom:10px;
+}
+.shoplist::-ms-expand{
+	display:none;
+}
+
+.searchbtn{
+	height : 35px;
+	font-size : 18px;
+	background-color : black;
+	color : white;
+}
+.searchbtn:hover{
+	cursor:pointer;
+}
+
+.totalsales{
+	border : 1px solid gray;
+	padding-right : 50px;
+	padding-left : 50px;
+	padding-top : 20px;
+	padding-bottom : 20px;
+	width : 50%;
+	margin-left : auto;
+	margin-right : auto;
+	margin-top : 100px;
+	text-align:center;
+	font-size : 23px;
+	font-weight : 600;
+}
+
+.saleslisttable{
+	margin-top : 100px;
+	text-align :center;
+	width : 50%;
+	margin-left : auto;
+	margin-right :auto;
+	border : 1px solid gray;
+	border-collapse: collapse;
+	margin-bottom : 200px;
+}
+
+.saleslisttable tr,td,th{
+	border : 1px solid gray;
+}
+
+.notsales{
+	text-decoration : line-through;
+}

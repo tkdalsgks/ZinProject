@@ -49,7 +49,7 @@ public class JoinServlet extends MyServlet {
 		String shop_code = req.getParameter("shop_code");
 		try {
 			if(type.equals("shop")) {  // 점포 주인 회원가입
-				String isShop = "SELECT COUNT(*) AS CNT FROM SHOP WHERE SHOP_CODE=?";
+				String isShop = "SELECT COUNT(*) AS CNT FROM SHOP WHERE SHOP_CODE=? AND MEMBER_CODE IS NOT NULL";
 				ps1 = conn.prepareStatement(isShop);
 				ps1.setInt(1, Integer.parseInt(shop_code));
 				rs1 = ps1.executeQuery();

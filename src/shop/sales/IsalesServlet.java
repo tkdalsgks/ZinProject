@@ -62,8 +62,8 @@ public class IsalesServlet extends MyServlet {
 			req.setAttribute("itemlist", item);
 			
 			String psaleslist = "SELECT I.ITEM_NAME,I.ITEM_PRICE,P.SALES_AMOUNT "
-					+ "FROM ITEM I, PSALES P "
-					+ "WHERE ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
+					+ "FROM ITEM I, PSALES P, SITEM S "
+					+ "WHERE P.ACCOUNT_ID=? AND P.SITEM_CODE=S.SITEM_CODE AND S.ITEM_CODE=I.ITEM_CODE";
 			ps = conn.prepareStatement(psaleslist);
 			ps.setString(1, account_id);
 			rs = ps.executeQuery();
@@ -78,8 +78,8 @@ public class IsalesServlet extends MyServlet {
 			req.setAttribute("psaleslist", psales);
 			
 			String sales_sum = "SELECT NVL(SUM(I.ITEM_PRICE * P.SALES_AMOUNT), 0) AS SALES_SUM "
-					+ "FROM ACCOUNT A, ITEM I, PSALES P "
-					+ "WHERE A.ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
+					+ "FROM ITEM I, PSALES P,SITEM S "
+					+ "WHERE P.ACCOUNT_ID=? AND P.SITEM_CODE=S.SITEM_CODE AND I.ITEM_CODE=S.ITEM_CODE";
 			ps = conn.prepareStatement(sales_sum);
 			ps.setString(1, account_id);
 			rs = ps.executeQuery();

@@ -24,7 +24,7 @@ import util.DBConnection;
 import util.MyServlet;
 
 @WebServlet("/orderprice")
-public class OrderPrice extends MyServlet {
+public class OrderPriceServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
     
 	@Override

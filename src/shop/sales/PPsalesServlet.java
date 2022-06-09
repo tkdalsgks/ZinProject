@@ -37,7 +37,7 @@ public class PPsalesServlet extends MyServlet {
 			rs = ps.executeQuery();
 			rs.next();
 			int salescode = rs.getInt("CODE") + 1;
-			int salesnumber = rs.getInt("CODE") + 1;
+			int salesnumber = rs.getInt("CODE2") + 1;
 			
 			String sitemCode = "SELECT SITEM_CODE FROM SITEM";
 			ps = conn.prepareStatement(sitemCode);
@@ -45,15 +45,16 @@ public class PPsalesServlet extends MyServlet {
 			rs.next();
 			int sitemcode = rs.getInt("SITEM_CODE");
 			
-			String salesAmount = "SELECT SUM(SALES_AMOUNT) AS SALES_AMOUNT FROM PSALES";
+			String salesAmount = "SELECT SUM(SALES_AMOUNT) AS SALES_AMOUNT FROM PSALES WHERE ACCOUNT_ID=?";
 			ps = conn.prepareStatement(salesAmount);
+			ps.setNString(1, account_id);
 			rs = ps.executeQuery();
 			rs.next();
 			int salesamount = rs.getInt("SALES_AMOUNT");
 			
 			String salesPrice = "SELECT NVL(SUM(I.ITEM_PRICE * P.SALES_AMOUNT), 0) AS SALES_SUM "
-					+ "FROM ACCOUNT A, ITEM I, PSALES P "
-					+ "WHERE A.ACCOUNT_ID=? AND P.SITEM_CODE=I.ITEM_CODE";
+					+ "FROM ITEM I, PSALES P, SITEM S "
+					+ "WHERE P.ACCOUNT_ID=? AND P.SITEM_CODE=S.SITEM_CODE AND S.ITEM_CODE=I.ITEM_CODE";
 			ps = conn.prepareStatement(salesPrice);
 			ps.setString(1, account_id);
 			rs = ps.executeQuery();

@@ -1,4 +1,4 @@
-package member.shop;
+package member.sales;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,38 +14,34 @@ import javax.servlet.http.HttpServletResponse;
 import util.DBConnection;
 import util.MyServlet;
 
-@WebServlet("/shopdelete")
-public class ShopDeleteServlet extends MyServlet {
+@WebServlet("/salesdelete")
+public class SalesDeleteServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection conn = DBConnection.getConnection();
 		
-		int shop_code = Integer.parseInt(req.getParameter("code"));
+		int sales_code = Integer.parseInt(req.getParameter("salescode"));
+		int sales_number = Integer.parseInt(req.getParameter("salesnumber"));
 		
-		String accountId = "SELECT ACCOUNT_ID FROM SHOP WHERE SHOP_CODE=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		req.setCharacterEncoding("UTF-8");
 		
 		try {
-			ps = conn.prepareStatement(accountId);
-			ps.setInt(1, shop_code);
-			rs = ps.executeQuery();
-			rs.next();
-			String account_id = rs.getString("account_id");
-			
-			String deleteShop = "UPDATE SHOP SET MEMBER_CODE=NULL WHERE SHOP_CODE=?";
-			
-			ps = conn.prepareStatement(deleteShop);
-			ps.setInt(1, shop_code);
+			String salesInfo = "SELECT * FROM SALES WHERE SALES_CODE=? AND SALES_NUMBER=?";
+			ps = conn.prepareStatement(salesInfo);
+			ps.setInt(1, sales_code);
+			ps.setInt(2, sales_number);
 			ps.executeUpdate();
 			
-			String deleteAccount = "DELETE FROM ACCOUNT WHERE ACCOUNT_ID=?";
 			
-			ps = conn.prepareStatement(deleteAccount);
-			ps.setString(1, account_id);
+			String deleteSales = "UPDATE SALES SET SALES_SORT=0 WHERE SALES_CODE=? AND SALES_NUMBER=?";
+			
+			ps = conn.prepareStatement(deleteSales);
+			ps.setInt(1, sales_code);
+			ps.setInt(2, sales_number);
 			ps.executeUpdate();
 			
 		} catch(SQLException e) {
@@ -57,9 +53,8 @@ public class ShopDeleteServlet extends MyServlet {
 			} catch(SQLException e) {}
 		}
 		
-		
 		String cPath = req.getContextPath();
-		resp.sendRedirect(cPath + "/shopadmin");
+		resp.sendRedirect(cPath + "/sales");
 	}
 
 }

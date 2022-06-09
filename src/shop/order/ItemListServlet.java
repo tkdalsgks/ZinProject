@@ -24,7 +24,7 @@ import util.DBConnection;
 import util.MyServlet;
 
 @WebServlet("/itemlist")
-public class ItemList extends MyServlet {
+public class ItemListServlet extends MyServlet {
 	private static final long serialVersionUID = 1L;
     
 	@Override
